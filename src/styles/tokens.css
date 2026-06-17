@@ -1,0 +1,252 @@
+/* ==========================================================================
+   DESIGN TOKENS — Sports Arena & Badminton Academy
+   Source of truth: 02_UI_UX_Design_System.md
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. COLOR SYSTEM — Light Mode (Default)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Primary Palette */
+  --color-primary: #1B5E20;          /* Deep Athletic Green */
+  --color-primary-dark: #103D14;      /* Hover/Active states */
+  --color-secondary: #0D47A1;         /* Deep Court Blue */
+  --color-accent: #F2A900;            /* Warm Amber — conversion CTAs */
+  --color-success: #2E7D32;
+  --color-warning: #ED6C02;
+  --color-error: #C62828;
+
+  /* Neutral Palette */
+  --color-bg: #FFFFFF;
+  --color-surface: #F7F8F6;
+  --color-surface-alt: #EEF1ED;
+  --color-border: #DDE2DC;
+  --color-text-primary: #1A1F1B;
+  --color-text-secondary: #5A6259;
+  --color-text-disabled: #A3AAA0;
+  --color-overlay: rgba(15, 23, 16, 0.55);
+
+  /* Semantic */
+  --color-footer-bg: #10241A;
+  --color-footer-text: #E3E7E1;
+  --color-footer-link-hover: var(--color-accent);
+
+  /* Button-specific */
+  --color-btn-primary-bg: var(--color-primary);
+  --color-btn-primary-text: #FFFFFF;
+  --color-btn-accent-bg: var(--color-accent);
+  --color-btn-accent-text: #1A1F1B;
+}
+
+/* --------------------------------------------------------------------------
+   2. COLOR SYSTEM — Dark Mode
+   -------------------------------------------------------------------------- */
+.dark {
+  --color-primary: #4CAF50;
+  --color-primary-dark: #388E3C;
+  --color-secondary: #5C8DEF;
+  --color-accent: #FFC233;
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-error: #EF5350;
+
+  --color-bg: #0F1410;
+  --color-surface: #1B221C;
+  --color-surface-alt: #262E27;
+  --color-border: #3A453D;
+  --color-text-primary: #F2F4F1;
+  --color-text-secondary: #AEB6AA;
+  --color-text-disabled: #6B7568;
+  --color-overlay: rgba(0, 0, 0, 0.65);
+
+  --color-footer-bg: #0F1410;
+  --color-footer-text: #E3E7E1;
+
+  --color-btn-primary-bg: #4CAF50;
+  --color-btn-primary-text: #0F1410;
+  --color-btn-accent-bg: #FFC233;
+  --color-btn-accent-text: #0F1410;
+}
+
+/* --------------------------------------------------------------------------
+   3. TYPOGRAPHY
+   -------------------------------------------------------------------------- */
+:root {
+  /* Font Families */
+  --font-heading: 'Poppins', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+
+  /* Type Scale — Desktop */
+  --font-display-xl: 700 56px/64px var(--font-heading);
+  --font-h1: 700 40px/48px var(--font-heading);
+  --font-h2: 600 32px/40px var(--font-heading);
+  --font-h3: 600 24px/32px var(--font-heading);
+  --font-h4: 600 20px/28px var(--font-heading);
+  --font-body-lg: 400 18px/28px var(--font-body);
+  --font-body-base: 400 16px/26px var(--font-body);
+  --font-body-sm: 400 14px/22px var(--font-body);
+  --font-button: 600 16px/24px var(--font-body);
+  --font-overline: 600 13px/18px var(--font-body);
+
+  /* Individual sizes for responsive overrides */
+  --fs-display-xl: 56px;
+  --fs-h1: 40px;
+  --fs-h2: 32px;
+  --fs-h3: 24px;
+  --fs-h4: 20px;
+  --fs-body-lg: 18px;
+  --fs-body: 16px;
+  --fs-body-sm: 14px;
+  --fs-button: 16px;
+  --fs-overline: 13px;
+
+  /* Line heights */
+  --lh-display-xl: 64px;
+  --lh-h1: 48px;
+  --lh-h2: 40px;
+  --lh-h3: 32px;
+  --lh-h4: 28px;
+  --lh-body-lg: 28px;
+  --lh-body: 26px;
+  --lh-body-sm: 22px;
+  --lh-button: 24px;
+  --lh-overline: 18px;
+
+  /* Font weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+}
+
+/* --------------------------------------------------------------------------
+   4. SPACING SCALE (4px-based)
+   -------------------------------------------------------------------------- */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+}
+
+/* --------------------------------------------------------------------------
+   5. ELEVATION & SHADOWS
+   -------------------------------------------------------------------------- */
+:root {
+  --shadow-sm: 0 1px 2px rgba(16, 24, 17, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 17, 0.10);
+  --shadow-lg: 0 8px 24px rgba(16, 24, 17, 0.14);
+}
+
+.dark {
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   6. BORDER RADIUS
+   -------------------------------------------------------------------------- */
+:root {
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+/* --------------------------------------------------------------------------
+   7. GRID & LAYOUT
+   -------------------------------------------------------------------------- */
+:root {
+  /* Breakpoints (for reference, used in media queries) */
+  --bp-mobile: 600px;
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
+  --bp-large: 1440px;
+
+  /* Container widths */
+  --container-desktop: 1140px;
+  --container-large: 1320px;
+
+  /* Grid gutters */
+  --gutter-mobile: 16px;
+  --gutter-tablet: 20px;
+  --gutter-desktop: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   8. TRANSITIONS & ANIMATIONS
+   -------------------------------------------------------------------------- */
+:root {
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   9. Z-INDEX SCALE
+   -------------------------------------------------------------------------- */
+:root {
+  --z-sticky-bar: 100;
+  --z-header: 200;
+  --z-dropdown: 300;
+  --z-mobile-nav: 400;
+  --z-modal: 500;
+  --z-lightbox: 600;
+  --z-toast: 700;
+  --z-announcement: 50;
+}
+
+/* --------------------------------------------------------------------------
+   10. COMPONENT TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  /* Header */
+  --header-height-desktop: 80px;
+  --header-height-mobile: 64px;
+
+  /* Sticky Contact Bar */
+  --sticky-bar-height: 56px;
+
+  /* Cards */
+  --card-bg: var(--color-surface);
+  --card-border: 1px solid var(--color-border);
+  --card-radius: var(--radius-md);
+  --card-padding: var(--space-6);
+  --card-shadow: var(--shadow-sm);
+  --card-shadow-hover: var(--shadow-md);
+
+  /* Buttons */
+  --btn-height: 48px;
+  --btn-padding-x: 24px;
+  --btn-radius: var(--radius-md);
+  --btn-font: var(--font-button);
+
+  /* Form Inputs */
+  --input-height: 48px;
+  --input-padding-y: var(--space-3);
+  --input-padding-x: var(--space-4);
+  --input-border: 1px solid var(--color-border);
+  --input-radius: var(--radius-sm);
+  --input-bg: var(--color-bg);
+  --input-focus-border: 2px solid var(--color-secondary);
+
+  /* Hero */
+  --hero-min-height-desktop: 600px;
+  --hero-min-height-mobile: 480px;
+
+  /* Content width for readability */
+  --content-max-width: 680px;
+
+  /* Touch targets */
+  --touch-target-min: 44px;
+}
