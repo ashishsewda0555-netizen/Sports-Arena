@@ -5,10 +5,11 @@ import { CheckCircle2, Shield, Star, Sparkles, Users } from 'lucide-react';
 import { PhotoStrip } from '@/components/shared/PhotoStrip';
 import { ContactCta } from '@/components/shared/ContactCta';
 import { IMAGES } from '@/lib/images';
+import { PageHeader } from '@/components/ui/PageHeader';
 
 export const metadata = {
   title: 'Our Facilities',
-  description: "Discover Bharti Sports Arena's courts, equipment, amenities, and playing environment in Jaipur.",
+  description: "Discover Bharti Sports Arena's courts, equipment, amenities, and playing environment in Sikar.",
 };
 
 export default async function FacilitiesPage() {
@@ -17,15 +18,12 @@ export default async function FacilitiesPage() {
   return (
     <>
       {/* Page Banner */}
-      <div className="relative overflow-hidden" style={{ background: 'var(--gradient-page-banner)' }}>
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at 20% 80%, rgba(27,94,32,0.08) 0%, transparent 50%)' }} />
-        <div className="container mx-auto px-4 relative z-10 pt-32 pb-14 md:pt-36 lg:pt-40 lg:pb-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">Our Facilities</h1>
-          <nav className="text-sm text-text-secondary font-medium uppercase tracking-wider">
-            Home <span className="mx-2 opacity-40">/</span> Facilities
-          </nav>
+      <PageHeader bgImage="/images/page-hero.png">
+        <h1>Our Facilities</h1>
+        <div className="breadcrumb">
+          Home <span className="mx-2">/</span> Facilities
         </div>
-      </div>
+      </PageHeader>
 
       <Section>
         <div className="max-w-3xl mx-auto text-center mb-16">
@@ -57,7 +55,7 @@ export default async function FacilitiesPage() {
                 className="prose prose-green dark:prose-invert text-text-secondary mb-6 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: content?.courtsHtml || '<p>BWF-approved synthetic mats on wooden flooring. Anti-glare LED lighting designed specifically for high-speed racquet sports. Each court is meticulously maintained for optimal performance.</p>' }}
               />
-              <ul className="space-y-3">
+              <ul className="space-y-4 md:space-y-3 max-md:mt-5 max-md:mb-8">
                 {['BWF Approved Synthetic Mats', 'Anti-Glare LED (1000 Lux)', 'ITTF Certified Tables'].map((item, i) => (
                   <li key={i} className="flex gap-3 items-center text-sm font-medium text-text-primary">
                     <div className="w-6 h-6 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
@@ -81,8 +79,8 @@ export default async function FacilitiesPage() {
                 className="prose prose-green dark:prose-invert text-text-secondary mb-6 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: content?.amenitiesHtml || '<p>A comfortable environment for players and visitors alike — from ample parking to clean change rooms, everything is designed with your convenience in mind.</p>' }}
               />
-              <ul className="space-y-3">
-                {['Ample Parking Space', 'Clean Restrooms & Change Rooms', 'RO Drinking Water Stations', 'Visitor Seating Gallery', 'Secure Lockers Available'].map((item, i) => (
+              <ul className="space-y-4 md:space-y-3 max-md:mt-5 max-md:mb-8">
+                {['Ample Parking Space', 'Clean Restrooms & Change Rooms', 'RO Drinking Water Stations', 'Visitor Seating Gallery'].map((item, i) => (
                   <li key={i} className="flex gap-3 items-center text-sm font-medium text-text-primary">
                     <div className="w-6 h-6 rounded-full bg-secondary/15 flex items-center justify-center shrink-0">
                       <CheckCircle2 className="w-4 h-4 text-secondary" />
@@ -94,7 +92,7 @@ export default async function FacilitiesPage() {
             </div>
             <div className="relative rounded-2xl aspect-video order-1 lg:order-2 overflow-hidden group shadow-lg">
               <Image
-                src={content?.amenitiesImageId?.url || IMAGES.facilityAmenities}
+                src="/images/amenities-new.jpg"
                 alt="Amenities"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -108,7 +106,7 @@ export default async function FacilitiesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
             <div className="relative rounded-2xl aspect-video overflow-hidden group shadow-lg">
               <Image
-                src={content?.safetyImageId?.url || IMAGES.facilitySafety}
+                src="/images/safety-new.jpg"
                 alt="Safety and Hygiene"
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -125,7 +123,7 @@ export default async function FacilitiesPage() {
                 className="prose prose-green dark:prose-invert text-text-secondary mb-6 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: content?.safetyHtml || '<p>We prioritize your health and safety above all. Our facility undergoes daily deep cleaning and follows strict hygiene protocols so you can focus on your game.</p>' }}
               />
-              <ul className="space-y-3">
+              <ul className="space-y-4 md:space-y-3 max-md:mt-5 max-md:mb-8">
                 {['Daily Deep Cleaning Protocol', 'First Aid Station On-Site', '24/7 CCTV Surveillance', 'Well Ventilated & Air Circulated', 'Power Backup — Uninterrupted Play'].map((item, i) => (
                   <li key={i} className="flex gap-3 items-center text-sm font-medium text-text-primary">
                     <div className="w-6 h-6 rounded-full bg-success/15 flex items-center justify-center shrink-0">

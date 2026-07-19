@@ -59,17 +59,17 @@ async function seed() {
     const existingContact = await ContactInfo.findOne();
     if (!existingContact) {
       await ContactInfo.create({
-        facilityName: 'Sports Arena',
-        addressLine1: '123 Sports Complex Road',
-        city: 'Jaipur',
+        facilityName: 'Bharti Sports Arena',
+        addressLine1: 'Kanwarpura Chouraha, Near Prince Education Hub,Bikaner Agra Bypass Road,Sikar,Rajasthan 332001',
+        city: 'Sikar',
         state: 'Rajasthan',
-        postalCode: '302001',
+        postalCode: '332001',
         country: 'India',
-        latitude: 26.9124,
-        longitude: 75.7873,
-        phonePrimary: '+91 98765 43210',
-        whatsappNumber: '919876543210',
-        email: 'info@sportsarena.com',
+        latitude: 27.6025,
+        longitude:  75.1104468,
+        phonePrimary: '+91 9352812625',
+        whatsappNumber: +'91 9571794918',
+        email: 'bhartisportsarena@gmail.com',
       });
       console.log('✅ ContactInfo seeded');
     } else {

@@ -6,10 +6,11 @@ import { Target, Lightbulb, Star, Users, Trophy } from 'lucide-react';
 import { PhotoStrip } from '@/components/shared/PhotoStrip';
 import { ContactCta } from '@/components/shared/ContactCta';
 import { IMAGES } from '@/lib/images';
+import { PageHeader } from '@/components/ui/PageHeader';
 
 export const metadata = {
   title: 'About Us',
-  description: "Learn about Bharti Sports Arena's story, mission, and facilities serving Jaipur's sports community.",
+  description: "Learn about Bharti Sports Arena's story, mission, and facilities serving Sikar's sports community.",
 };
 
 export default async function AboutPage() {
@@ -18,15 +19,12 @@ export default async function AboutPage() {
   return (
     <>
       {/* Page Banner */}
-      <div className="relative overflow-hidden" style={{ background: 'var(--gradient-page-banner)' }}>
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at 20% 80%, rgba(27,94,32,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(13,71,161,0.05) 0%, transparent 50%)' }} />
-        <div className="container mx-auto px-4 relative z-10 pt-32 pb-14 md:pt-36 lg:pt-40 lg:pb-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">About Us</h1>
-          <nav className="text-sm text-text-secondary font-medium uppercase tracking-wider">
-            Home <span className="mx-2 opacity-40">/</span> About
-          </nav>
+      <PageHeader bgImage="/images/page-hero.png">
+        <h1>About Us</h1>
+        <div className="breadcrumb">
+          Home <span className="mx-2">/</span> About
         </div>
-      </div>
+      </PageHeader>
 
       {/* OUR STORY */}
       <Section id="story">
@@ -81,7 +79,7 @@ export default async function AboutPage() {
             </div>
             <h3 className="font-heading font-bold text-2xl mb-4 text-text-primary">Our Vision</h3>
             <p className="text-text-secondary leading-relaxed">
-              {content?.vision || 'To be a trusted destination for sports enthusiasts in Jaipur — fostering a growing community of players, learners, and passionate athletes.'}
+              {content?.vision || 'To be a trusted destination for sports enthusiasts in Sikar — fostering a growing community of players, learners, and passionate athletes.'}
             </p>
           </div>
         </div>

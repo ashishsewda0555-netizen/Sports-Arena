@@ -69,7 +69,7 @@ export default function ContactInfoAdmin() {
         method: 'PUT',
         body: JSON.stringify(data)
       });
-      toast.success('Contact info updated successfully!');
+      toast.success(' updated successfully!');
     } catch (err) {
       toast.error(err.message || 'Failed to update contact info');
     } finally {

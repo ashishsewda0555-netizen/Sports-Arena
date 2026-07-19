@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 
 export const metadata = {
   title: 'Testimonials & Reviews',
-  description: 'Read what our members say about coaching, facilities, and experience at Bharti Sports Arena, Jaipur.',
+  description: 'Read what our members say about coaching, facilities, and experience at Bharti Sports Arena, Sikar.',
 };
 
 export default async function TestimonialsPage() {

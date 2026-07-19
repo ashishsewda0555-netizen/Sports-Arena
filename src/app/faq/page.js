@@ -8,7 +8,7 @@ import { MessageCircle } from 'lucide-react';
 
 export const metadata = {
   title: 'Frequently Asked Questions',
-  description: 'Answers to common questions about coaching, pricing, timings, and facilities at Bharti Sports Arena, Jaipur.',
+  description: 'Answers to common questions about coaching, pricing, timings, and facilities at Bharti Sports Arena, Sikar.',
 };
 
 export default async function FaqPage() {

@@ -171,7 +171,7 @@ async function seed() {
       facilityName: process.env.NEXT_PUBLIC_BRAND_NAME || 'Sports Arena',
       addressLine1: '123 Sports Complex Road',
       addressLine2: 'Near City Stadium',
-      city: process.env.NEXT_PUBLIC_BRAND_CITY || 'Jaipur',
+      city: process.env.NEXT_PUBLIC_BRAND_CITY || 'Sikar',
       state: 'Rajasthan',
       postalCode: '302001',
       country: 'India',

@@ -10,7 +10,6 @@ const sportSchema = new mongoose.Schema(
     slug: {
       type: String,
       required: [true, 'Slug is required'],
-      unique: true,
       lowercase: true,
       trim: true,
     },

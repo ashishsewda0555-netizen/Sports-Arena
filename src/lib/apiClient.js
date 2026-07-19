@@ -22,7 +22,12 @@ export async function fetchApi(endpoint, options = {}) {
     delete config.headers['Content-Type'];
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+  let response;
+  try {
+    response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+  } catch (error) {
+    throw new Error('Network error: Could not reach the API server.');
+  }
 
   if (response.status === 204) {
     return null; // No content

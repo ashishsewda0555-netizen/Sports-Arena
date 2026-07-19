@@ -28,6 +28,7 @@ export default function ContactPage() {
   const toast = useToast();
   const [operatingHours, setOperatingHours] = useState(null);
   const [isOpenNow, setIsOpenNow] = useState(false);
+  const [fetchError, setFetchError] = useState(false);
 
   useEffect(() => {
     async function loadHours() {
@@ -62,7 +63,7 @@ export default function ContactPage() {
           }
         }
       } catch (err) {
-        console.error('Failed to load operating hours', err);
+        setFetchError(true);
       }
     }
     loadHours();
@@ -95,7 +96,7 @@ export default function ContactPage() {
 
   const schema = generateLocalBusinessSchema({
     name: "Bharti Sports Arena",
-    description: "Premium multi-sport facility offering professional coaching and casual play in Jaipur.",
+    description: "Premium multi-sport facility offering professional coaching and casual play in Sikar.",
     url: "https://bhartisportsarena.com/contact",
     image: "https://bhartisportsarena.com/images/hero.jpg",
     address: { street: "Kanwarpura Chouraha, Near Prince Education Hub, Bikaner Agra Bypass Road", city: "Sikar", state: "Rajasthan", zip: "332001" },
@@ -243,8 +244,10 @@ export default function ContactPage() {
                       )}
                     </li>
                   ))
+                ) : fetchError ? (
+                  <li className="text-center py-4 text-error font-medium">Schedule unavailable right now.</li>
                 ) : (
-                  <li className="text-center py-4 text-text-secondary">Loading schedule...</li>
+                  <li className="text-center py-4 text-text-secondary animate-pulse">Loading schedule...</li>
                 )}
               </ul>
             </div>

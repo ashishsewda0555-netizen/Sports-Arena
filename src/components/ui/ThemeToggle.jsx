@@ -12,7 +12,7 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <div className="w-10 h-10 rounded-full bg-surface-alt animate-pulse" />;
+    return <button className="p-2 rounded-full bg-surface-alt animate-pulse w-10 h-10" aria-label="Loading Theme" disabled />;
   }
 
   return (

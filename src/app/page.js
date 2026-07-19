@@ -18,8 +18,8 @@ import { SchemaMarkup, generateLocalBusinessSchema } from '@/components/seo/Sche
 import { IMAGES, getSportImage } from '@/lib/images';
 
 export const metadata = {
-  title: 'Bharti Sports Arena – Badminton Academy & Multi-Sport Arena in Jaipur',
-  description: 'Train under professional coaches at Bharti Sports Arena, Jaipur\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
+  title: 'Bharti Sports Arena – Badminton Academy & Multi-Sport Arena in Sikar',
+  description: 'Train under professional coaches at Bharti Sports Arena, Sikar\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
 };
 
 export default async function Home() {
@@ -37,7 +37,7 @@ export default async function Home() {
 
   const schema = generateLocalBusinessSchema({
     name: "Bharti Sports Arena",
-    description: "Professional multi-sport academy offering coaching and casual play in Jaipur.",
+    description: "Professional multi-sport academy offering coaching and casual play in Sikar.",
     url: "https://bhartisportsarena.com",
     image: "https://bhartisportsarena.com/images/hero.jpg",
     address: { street: "Kanwarpura Chouraha, Near Prince Education Hub, Bikaner Agra Bypass Road", city: "Sikar", state: "Rajasthan", zip: "332001" },
@@ -52,12 +52,12 @@ export default async function Home() {
       <section className="relative min-h-[600px] lg:min-h-[720px] flex items-center overflow-hidden">
         {/* Full-bleed background image */}
         <Image
-          src="/badminton-red-mat.jpg"
+          src="/images/homepage-hero-new.jpg"
           alt="Sikar Sports Arena — Indoor Badminton Court"
           fill
-          loading="lazy"
+          priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-right md:object-center"
         />
         {/* Dark gradient overlay — ensures WHITE text is fully readable */}
         <div
@@ -71,7 +71,7 @@ export default async function Home() {
         <div className="absolute top-24 right-16 w-64 h-64 bg-primary/20 rounded-full blur-3xl z-[2] pointer-events-none" />
         <div className="absolute bottom-24 left-16 w-80 h-80 bg-secondary/15 rounded-full blur-3xl z-[2] pointer-events-none" />
 
-        <div className="container mx-auto px-6 sm:px-8 relative z-10 pt-28 pb-24 text-center lg:text-left">
+        <div className="container mx-auto px-6 sm:px-8 relative z-10 pt-48 md:pt-36 lg:pt-28 max-md:mt-12 pb-24 text-center lg:text-left">
           <div className="max-w-3xl">
             {/* Pill badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/25 text-sm font-semibold text-white mb-6">
@@ -80,7 +80,7 @@ export default async function Home() {
             </div>
 
             <h1 className="mb-6 text-white drop-shadow-lg">
-              <span className="block text-5xl md:text-6xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
+              <span className="block text-accent md:text-white text-5xl md:text-6xl lg:text-[64px] font-bold leading-[1.1] tracking-tight">
                 Train. Play.
               </span>
               <span className="block text-5xl md:text-6xl lg:text-[64px] font-bold leading-[1.1] tracking-tight text-accent mt-1">
@@ -88,11 +88,11 @@ export default async function Home() {
               </span>
             </h1>
             <p className="text-lg md:text-xl text-white/85 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Modern indoor facilities, professional coaches, and a growing community. 
+              Modern indoor facilities, professional coaches, and a growing community.
               Elevate your game at Bharti Sports Arena.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-8 lg:mb-0">
               <Link
                 href="/sports"
                 className="inline-flex items-center justify-center h-14 px-8 rounded-lg bg-primary text-white font-bold text-base hover:bg-primary-dark transition-colors shadow-lg gap-2"
@@ -110,7 +110,7 @@ export default async function Home() {
             </div>
 
             {/* Feature highlights */}
-            <div className="flex flex-wrap gap-6 mt-16 justify-center lg:justify-start">
+            <div className="flex flex-wrap gap-6 mt-8 lg:mt-16 justify-center lg:justify-start">
               {[
                 { icon: Trophy, label: 'Indoor Badminton Courts' },
                 { icon: Users, label: 'Professional Coaching' },
@@ -138,70 +138,76 @@ export default async function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {sports && sports.length > 0
             ? sports.slice(0, 8).map((sport) => (
-                <Card key={sport._id} className="flex flex-col group">
-                  <div className="relative overflow-hidden h-[220px] md:h-[250px] lg:h-[320px]">
-                    <SafeImage
-                      src={getSportImage(sport)}
-                      alt={sport.name}
-                      fallbackText={sport.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-600"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <Card key={sport._id} className="flex flex-col group">
+                <div className="relative overflow-hidden h-[220px] md:h-[250px] lg:h-[320px]">
+                  <SafeImage
+                    src={getSportImage(sport)}
+                    alt={sport.name}
+                    fallbackText={sport.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-600"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  {(sport.category || sport.name === 'Table Tennis') && (
                     <div className="absolute bottom-3 left-3">
                       <span className="text-xs font-semibold uppercase tracking-wider text-white/80 bg-black/30 backdrop-blur-sm px-2 py-1 rounded-full">
-                        {sport.category?.replace('-', ' ')}
+                        {sport.name === 'Table Tennis' ? 'INDOOR TABLE' : sport.category.replace('-', ' ')}
                       </span>
                     </div>
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{sport.name}</CardTitle>
-                    <CardDescription className="line-clamp-2">{sport.shortDescription}</CardDescription>
-                  </CardHeader>
-                  <CardFooter className="mt-auto pt-0">
-                    <Link
-                      href={`/sports/${sport.slug}`}
-                      className="inline-flex items-center text-sm font-semibold text-primary hover:text-primary-dark transition-colors group/link"
-                    >
-                      Explore {sport.name}
-                      <ArrowRight className="w-4 h-4 ml-1.5 group-hover/link:translate-x-1 transition-transform" />
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))
+                  )}
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-lg">{sport.name}</CardTitle>
+                  <CardDescription className="line-clamp-2">
+                    {sport.shortDescription ||
+                      (sport.name === 'Badminton' ? 'Fast-paced indoor badminton for all skill levels.' :
+                        sport.name === 'Table Tennis' ? 'Quick rallies and sharp reflexes on premium tables.' : '')}
+                  </CardDescription>
+                </CardHeader>
+                <CardFooter className="mt-auto pt-0">
+                  <Link
+                    href={`/sports/${sport.slug}`}
+                    className="inline-flex items-center text-sm font-semibold text-primary hover:text-primary-dark transition-colors group/link"
+                  >
+                    Explore {sport.name}
+                    <ArrowRight className="w-4 h-4 ml-1.5 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))
             : /* Empty state — 4 placeholder cards with sports images */
-              [
-                { name: 'Badminton', img: IMAGES.badminton, href: '/sports/badminton', desc: 'Professional indoor courts with BWF-approved mats.' },
-                { name: 'Table Tennis', img: IMAGES.tableTennis, href: '/sports/table-tennis', desc: 'ITTF certified tables for all skill levels.' },
-                { name: 'Fitness Zone', img: IMAGES.fitness, href: '/sports/fitness', desc: 'Fully equipped gym for strength & conditioning.' },
-                { name: 'Snooker', img: IMAGES.snooker, href: '/sports/snooker', desc: 'Premium snooker tables in a great atmosphere.' },
-              ].map((item) => (
-                <Card key={item.name} className="flex flex-col group">
-                  <div className="relative overflow-hidden h-[220px] md:h-[250px] lg:h-[320px]">
-                    <Image
-                      src={item.img}
-                      alt={item.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-600"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{item.name}</CardTitle>
-                    <CardDescription>{item.desc}</CardDescription>
-                  </CardHeader>
-                  <CardFooter className="mt-auto pt-0">
-                    <Link
-                      href={item.href}
-                      className="inline-flex items-center text-sm font-semibold text-primary hover:text-primary-dark transition-colors group/link"
-                    >
-                      Learn More <ArrowRight className="w-4 h-4 ml-1.5 group-hover/link:translate-x-1 transition-transform" />
-                    </Link>
-                  </CardFooter>
-                </Card>
-              ))
+            [
+              { name: 'Badminton', img: IMAGES.badminton, href: '/sports/badminton', desc: 'Professional indoor courts with BWF-approved mats.' },
+              { name: 'Table Tennis', img: IMAGES.tableTennis, href: '/sports/table-tennis', desc: 'ITTF certified tables for all skill levels.' },
+              { name: 'Fitness Zone', img: IMAGES.fitness, href: '/sports/fitness', desc: 'Fully equipped gym for strength & conditioning.' },
+              { name: 'Snooker', img: IMAGES.snooker, href: '/sports/snooker', desc: 'Premium snooker tables in a great atmosphere.' },
+            ].map((item) => (
+              <Card key={item.name} className="flex flex-col group">
+                <div className="relative overflow-hidden h-[220px] md:h-[250px] lg:h-[320px]">
+                  <Image
+                    src={item.img}
+                    alt={item.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 25vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-600"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-lg">{item.name}</CardTitle>
+                  <CardDescription>{item.desc}</CardDescription>
+                </CardHeader>
+                <CardFooter className="mt-auto pt-0">
+                  <Link
+                    href={item.href}
+                    className="inline-flex items-center text-sm font-semibold text-primary hover:text-primary-dark transition-colors group/link"
+                  >
+                    Learn More <ArrowRight className="w-4 h-4 ml-1.5 group-hover/link:translate-x-1 transition-transform" />
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))
           }
         </div>
       </Section>
@@ -228,39 +234,39 @@ export default async function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {coaches && coaches.length > 0
                 ? coaches.slice(0, 3).map((coach) => (
-                    <Card key={coach._id} className="text-center h-full flex flex-col">
-                      <div className="w-24 h-24 mx-auto mt-6 rounded-full overflow-hidden relative ring-4 ring-primary/20 ring-offset-2 ring-offset-surface bg-surface-alt">
-                        <FallbackImage src={coach.imageUrl || ''} alt={coach.name} className="w-full h-full" fallbackIcon="UserRound" />
+                  <Card key={coach._id} className="text-center h-full flex flex-col">
+                    <div className="w-24 h-24 mx-auto mt-6 rounded-full overflow-hidden relative ring-4 ring-primary/20 ring-offset-2 ring-offset-surface bg-surface-alt">
+                      <FallbackImage src={coach.imageUrl || ''} alt={coach.name} className="w-full h-full" fallbackIcon="UserRound" />
+                    </div>
+                    <CardContent className="flex-grow flex flex-col pt-4">
+                      <CardTitle as="h4" className="text-lg">{coach.name}</CardTitle>
+                      <p className="text-sm text-primary font-semibold mb-3 mt-1">{coach.specialization}</p>
+                      <div className="mb-4">
+                        {coach.yearsOfExperience > 0 && <Badge variant="primary">{coach.yearsOfExperience} Yrs Experience</Badge>}
                       </div>
-                      <CardContent className="flex-grow flex flex-col pt-4">
-                        <CardTitle as="h4" className="text-lg">{coach.name}</CardTitle>
-                        <p className="text-sm text-primary font-semibold mb-3 mt-1">{coach.specialization}</p>
-                        <div className="mb-4">
-                          {coach.yearsOfExperience > 0 && <Badge variant="primary">{coach.yearsOfExperience} Yrs Experience</Badge>}
-                        </div>
-                        <Link href={`/coaching#${coach._id}`} className="mt-auto inline-flex items-center justify-center text-sm text-primary font-semibold hover:text-primary-dark transition-colors">
-                          View Profile →
-                        </Link>
-                      </CardContent>
-                    </Card>
-                  ))
+                      <Link href={`/coaching#${coach._id}`} className="mt-auto inline-flex items-center justify-center text-sm text-primary font-semibold hover:text-primary-dark transition-colors">
+                        View Profile →
+                      </Link>
+                    </CardContent>
+                  </Card>
+                ))
                 : /* Placeholder coaching cards */
-                  [
-                    { name: 'Head Coach', spec: 'Badminton', exp: 12, img: IMAGES.coachingAdult },
-                    { name: 'Sr. Coach', spec: 'Table Tennis', exp: 8, img: IMAGES.coaching },
-                    { name: 'Fitness Coach', spec: 'Strength & Conditioning', exp: 6, img: IMAGES.fitnessAction },
-                  ].map((c, i) => (
-                    <Card key={i} className="text-center h-full flex flex-col">
-                      <div className="w-24 h-24 mx-auto mt-6 rounded-full overflow-hidden relative ring-4 ring-primary/20 ring-offset-2 ring-offset-surface">
-                        <Image src={c.img} alt={c.name} fill className="object-cover" />
-                      </div>
-                      <CardContent className="flex-grow flex flex-col pt-4">
-                        <CardTitle as="h4" className="text-lg">{c.name}</CardTitle>
-                        <p className="text-sm text-primary font-semibold mb-3 mt-1">{c.spec}</p>
-                        <Badge variant="primary">{c.exp} Yrs Experience</Badge>
-                      </CardContent>
-                    </Card>
-                  ))
+                [
+                  { name: 'Head Coach', spec: 'Badminton', exp: 12, img: IMAGES.coachingAdult },
+                  { name: 'Sr. Coach', spec: 'Table Tennis', exp: 8, img: IMAGES.coaching },
+                  { name: 'Fitness Coach', spec: 'Strength & Conditioning', exp: 6, img: IMAGES.fitnessAction },
+                ].map((c, i) => (
+                  <Card key={i} className="text-center h-full flex flex-col">
+                    <div className="w-24 h-24 mx-auto mt-6 rounded-full overflow-hidden relative ring-4 ring-primary/20 ring-offset-2 ring-offset-surface">
+                      <Image src={c.img} alt={c.name} fill className="object-cover" />
+                    </div>
+                    <CardContent className="flex-grow flex flex-col pt-4">
+                      <CardTitle as="h4" className="text-lg">{c.name}</CardTitle>
+                      <p className="text-sm text-primary font-semibold mb-3 mt-1">{c.spec}</p>
+                      <Badge variant="primary">{c.exp} Yrs Experience</Badge>
+                    </CardContent>
+                  </Card>
+                ))
               }
             </div>
           </div>
@@ -316,7 +322,7 @@ export default async function Home() {
               align="left"
             />
             <ul className="space-y-4 mb-8">
-              {['Cardio Equipment', 'Free Weights & Barbells', 'Functional Training Area', 'Strength Machines', 'Expert Trainers On-Site'].map((item) => (
+              {['Basic Equipments', 'Free Weights & Barbells', 'Functional Training Area', 'Expert Trainers On-Site'].map((item) => (
                 <li key={item} className="flex items-center gap-3">
                   <div className="w-7 h-7 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                     <CheckCircle2 className="w-4 h-4 text-primary" />
@@ -352,13 +358,13 @@ export default async function Home() {
           {(galleryImages && galleryImages.length > 0
             ? galleryImages.slice(0, 6).map((img) => ({ url: img.imageUrl, title: img.title, id: img._id }))
             : [
-                { url: IMAGES.gallery1, title: 'Badminton Courts', id: '1' },
-                { url: IMAGES.gallery2, title: 'Table Tennis Arena', id: '2' },
-                { url: IMAGES.gallery3, title: 'Fitness Zone', id: '3' },
-                { url: IMAGES.gallery4, title: 'Snooker Tables', id: '4' },
-                { url: IMAGES.gallery5, title: 'Arena Overview', id: '5' },
-                { url: IMAGES.gallery6, title: 'Badminton Action', id: '6' },
-              ]
+              { url: IMAGES.gallery1, title: 'Badminton Courts', id: '1' },
+              { url: IMAGES.gallery2, title: 'Table Tennis Arena', id: '2' },
+              { url: IMAGES.gallery3, title: 'Fitness Zone', id: '3' },
+              { url: IMAGES.gallery4, title: 'Snooker Tables', id: '4' },
+              { url: IMAGES.gallery5, title: 'Arena Overview', id: '5' },
+              { url: IMAGES.gallery6, title: 'Badminton Action', id: '6' },
+            ]
           ).map((img, idx) => (
             <div
               key={img.id}
@@ -441,7 +447,7 @@ export default async function Home() {
         />
         <div className="max-w-5xl mx-auto mt-6">
           <div className="flex flex-col md:flex-row gap-6 md:items-stretch">
-            
+
             {/* PHOTO PANEL (Top on Mobile, Right on Desktop) */}
             <div className="order-1 md:order-2 md:w-[260px] shrink-0 bg-surface-alt rounded-2xl border-t-[3px] border-t-primary/50 border-x border-b border-border flex flex-col relative overflow-hidden group">
               {/* Corner bracket accents (top-left, bottom-right) */}
@@ -450,9 +456,9 @@ export default async function Home() {
 
               {/* Desktop: Photo Body (Hidden on Mobile) */}
               <div className="hidden md:flex flex-1 items-center justify-center relative min-h-[200px]">
-                <ClickableAvatar 
-                  src="/images/founder.jpg" 
-                  alt="Captain Shubhkaran Khichar" 
+                <ClickableAvatar
+                  src="/images/founder.jpg"
+                  alt="Captain Shubhkaran Khichar"
                   containerClassName="w-48 h-48 rounded-full ring-4 ring-primary/20 relative z-10 bg-surface-alt shadow-xl"
                   imageSizes="256px"
                 />
@@ -460,9 +466,9 @@ export default async function Home() {
 
               {/* Mobile: Horizontal Card / Desktop: Bottom Attribution Strip */}
               <div className="flex items-center p-5 md:p-4 bg-surface-alt md:bg-black/20 md:border-t md:border-border mt-auto relative z-20">
-                <ClickableAvatar 
-                  src="/images/founder.jpg" 
-                  alt="Captain Shubhkaran Khichar" 
+                <ClickableAvatar
+                  src="/images/founder.jpg"
+                  alt="Captain Shubhkaran Khichar"
                   containerClassName="w-16 h-16 md:w-10 md:h-10 rounded-full shrink-0 ring-2 ring-primary/10 mr-4 md:mr-3 bg-surface-alt shadow-sm"
                   imageSizes="128px"
                 />
@@ -484,12 +490,12 @@ export default async function Home() {
                   &quot;When I came back to Sikar after years at sea, I saw talented kids with nowhere proper to train &mdash; no real courts, no real coaching, no real facility built for the sport itself. That&apos;s why we started Bharti Sports Arena. Sports gave me the discipline and health that carried me across oceans, and I wanted this district to have a place that could do the same for its own athletes. We didn&apos;t set out to open just another gym &mdash; we set out to build the first true multi-sport arena in Sikar, and we intend to keep it the best one. Whether you&apos;re here to play, train, or compete, this is your home ground.&quot;
                 </p>
               </div>
-              
+
               {/* Attribution Row */}
               <div className="flex items-center gap-4 px-6 py-5 sm:px-10 border-t border-border bg-surface-alt/30 rounded-b-2xl">
-                <ClickableAvatar 
-                  src="/images/founder.jpg" 
-                  alt="Captain Shubhkaran Khichar" 
+                <ClickableAvatar
+                  src="/images/founder.jpg"
+                  alt="Captain Shubhkaran Khichar"
                   containerClassName="w-12 h-12 rounded-full shrink-0 ring-2 ring-primary/10 bg-surface-alt shadow-sm"
                   imageSizes="96px"
                 />

@@ -95,6 +95,7 @@ export function Header() {
           <div className="flex md:hidden items-center gap-3">
             <ThemeToggle />
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(true)}
               className="p-2 rounded-lg transition-colors text-text-primary hover:bg-surface-alt"
               aria-label="Open Menu"
@@ -139,8 +140,8 @@ export function Header() {
           </button>
         </div>
 
-        <nav className="px-3 py-5 flex-grow overflow-y-auto bg-white dark:bg-surface">
-          <ul className="flex flex-col gap-1">
+        <nav className="px-3 py-6 flex-grow flex flex-col overflow-y-auto bg-white dark:bg-surface">
+          <ul className="flex flex-col gap-1 my-auto pb-6 border-b border-border/40 w-full px-2">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (

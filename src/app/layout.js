@@ -20,12 +20,12 @@ export const metadata = {
   metadataBase: new URL('https://bhartisportsarena.com'),
   title: {
     template: '%s | Bharti Sports Arena',
-    default: 'Bharti Sports Arena | Multi-Sport Academy & Badminton in Jaipur',
+    default: 'Bharti Sports Arena | Multi-Sport Academy & Badminton in Sikar',
   },
-  description: 'Train under professional coaches at Bharti Sports Arena, Jaipur\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
+  description: 'Train under professional coaches at Bharti Sports Arena, Sikar\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
   openGraph: {
-    title: 'Bharti Sports Arena | Multi-Sport Academy & Badminton in Jaipur',
-    description: 'Train under professional coaches at Bharti Sports Arena, Jaipur\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
+    title: 'Bharti Sports Arena | Multi-Sport Academy & Badminton in Sikar',
+    description: 'Train under professional coaches at Bharti Sports Arena, Sikar\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
     url: 'https://bhartisportsarena.com',
     siteName: 'Bharti Sports Arena',
     locale: 'en_IN',
@@ -33,8 +33,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bharti Sports Arena | Multi-Sport Academy & Badminton in Jaipur',
-    description: 'Train under professional coaches at Bharti Sports Arena, Jaipur\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
+    title: 'Bharti Sports Arena | Multi-Sport Academy & Badminton in Sikar',
+    description: 'Train under professional coaches at Bharti Sports Arena, Sikar\'s growing multi-sport academy offering badminton, table tennis, snooker, fitness & more.',
   },
 };
 

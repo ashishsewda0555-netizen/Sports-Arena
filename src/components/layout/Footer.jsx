@@ -101,10 +101,10 @@ export function Footer() {
               </p>
 
               {/* Social Icons — fetched from admin Social Links */}
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {[
-                  { icon: Instagram, label: 'Instagram', url: socialLinks?.instagramUrl },
-                  { icon: Facebook, label: 'Facebook', url: socialLinks?.facebookUrl },
+                  { icon: Instagram, label: 'Instagram', url: socialLinks?.instagramUrl || 'https://www.instagram.com/bharti_sports_arena/' },
+                  { icon: Facebook, label: 'Facebook', url: socialLinks?.facebookUrl || 'https://www.facebook.com/p/Bharti-Sport-Arena-61590606722869/' },
                   { icon: Youtube, label: 'YouTube', url: socialLinks?.youtubeUrl },
                 ]
                   .filter(({ url }) => normalizeUrl(url)) // hide icons with no configured URL
@@ -115,7 +115,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-primary hover:scale-110 transition-all duration-200"
+                    className="w-11 h-11 rounded-xl bg-white/10 flex items-center justify-center text-white hover:bg-primary hover:scale-110 transition-all duration-200"
                   >
                     <Icon className="w-5 h-5" />
                   </a>

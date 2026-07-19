@@ -16,9 +16,9 @@ export const IMAGES = {
   arenaWide: `${UNS}-1517466787929-bc90951d0974?w=1200&q=80&auto=format&fit=crop`,
 
   // ── Sports ────────────────────────────────────────────────────────────────
-  badminton: `${UNS}-1626224583764-f87db24ac4ea?w=800&q=80&auto=format&fit=crop`,
+  badminton: '/images/badminton-action.jpg',
   // Badminton shuttlecock / action shot
-  badmintonAction: `${UNS}-1521537634581-0dced2fee2ef?w=800&q=80&auto=format&fit=crop`,
+  badmintonAction: '/images/badminton-action.jpg',
 
   tableTennis: `${UNS}-1534158914592-062992fbe900?w=800&q=80&auto=format&fit=crop`,
   // Ping pong paddle close-up (verified working)
@@ -54,7 +54,7 @@ export const IMAGES = {
   event: `${UNS}-1580910365203-91ea9115a319?w=800&q=80&auto=format&fit=crop`,
 
   // ── Gallery Placeholders ──────────────────────────────────────────────────
-  gallery1: `${UNS}-1626224583764-f87db24ac4ea?w=600&q=80&auto=format&fit=crop`,
+  gallery1: '/images/badminton-action.jpg',
   // Badminton
   gallery2: `${UNS}-1534158914592-062992fbe900?w=600&q=80&auto=format&fit=crop`,
   // Table Tennis
@@ -64,11 +64,11 @@ export const IMAGES = {
   // Snooker
   gallery5: `${UNS}-1517466787929-bc90951d0974?w=600&q=80&auto=format&fit=crop`,
   // Arena overview
-  gallery6: `${UNS}-1521537634581-0dced2fee2ef?w=600&q=80&auto=format&fit=crop`,
+  gallery6: '/images/badminton-action.jpg',
   // Badminton action
 
   // ── About / Story ─────────────────────────────────────────────────────────
-  story: `${UNS}-1626224583764-f87db24ac4ea?w=900&q=80&auto=format&fit=crop`,
+  story: '/images/badminton-action.jpg',
   // Indoor sports arena
   team: `${UNS}-1526232761682-d26e03ac148e?w=900&q=80&auto=format&fit=crop`,
 

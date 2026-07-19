@@ -9,7 +9,7 @@ import { ContactCta } from '@/components/shared/ContactCta';
 
 export const metadata = {
   title: 'Pricing & Membership Plans',
-  description: 'View coaching plans, casual play rates, and fitness membership pricing at Bharti Sports Arena, Jaipur. Contact us for current offers.',
+  description: 'View coaching plans, casual play rates, and fitness membership pricing at Bharti Sports Arena, Sikar. Contact us for current offers.',
 };
 
 export default async function PricingPage() {

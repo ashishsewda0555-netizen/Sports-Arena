@@ -6,7 +6,7 @@ import { SchemaMarkup, generateEventSchema } from '@/components/seo/SchemaMarkup
 
 export const metadata = {
   title: 'Events & Tournaments',
-  description: 'Stay updated on upcoming tournaments and past events at Bharti Sports Arena, Jaipur\'s leading sports academy.',
+  description: 'Stay updated on upcoming tournaments and past events at Bharti Sports Arena, Sikar\'s leading sports academy.',
 };
 
 export default async function EventsPage() {

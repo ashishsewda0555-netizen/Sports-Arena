@@ -14,14 +14,14 @@ export async function generateMetadata({ params }) {
   const sport = await getSportBySlug(slug);
   if (!sport) {
     return {
-      title: `${slug ? slug.replace(/-/g, ' ') : 'Sport'} | Champions Sports Arena`,
-      description: 'Discover our sports facilities at Champions Sports Arena, Jaipur.',
+      title: `${slug ? slug.replace(/-/g, ' ') : 'Sport'} | Bharti Sports Arena`,
+      description: 'Discover our sports facilities at Bharti Sports Arena, Sikar.',
     };
   }
 
   const title = sport.ctaType === 'coaching-enquiry'
-    ? `${sport.name} Coaching & Courts in Jaipur | Champions Sports Arena`
-    : `${sport.name} Facility in Jaipur | Champions Sports Arena`;
+    ? `${sport.name} Coaching & Courts in Sikar | Bharti Sports Arena`
+    : `${sport.name} Facility in Sikar | Bharti Sports Arena`;
 
   return {
     title,
@@ -92,7 +92,7 @@ function SportNotFoundPage({ slug, allSports }) {
               {sportName} — Coming to Sports Arena!
             </h2>
             <p className="text-text-secondary leading-relaxed mb-6 max-w-lg mx-auto">
-              We are setting up a world-class {sportName} facility at Champions Sports Arena. 
+              We are setting up a world-class {sportName} facility at Bharti Sports Arena. 
               The courts, equipment, and coaching programs are being prepared to give you the best 
               experience possible. Stay tuned — or enquire now to be the first to know when we launch!
             </p>
@@ -203,12 +203,27 @@ export default async function SportDetailPage({ params }) {
   const schema = generateServiceSchema({
     name: sport.name,
     description: sport.shortDescription,
-    providerName: 'Champions Sports Arena',
+    providerName: 'Bharti Sports Arena',
     providerUrl: 'https://bhartisportsarena.com',
   });
 
   // Best image for the hero
-  const heroImage = sport.featuredImageId?.url || getSportImage(sport);
+  const originalHeroImage = sport.featuredImageId?.url || getSportImage(sport);
+  let heroImage = originalHeroImage;
+  if (slug === 'badminton') {
+    heroImage = '/images/sports/new-badminton-header.jpg';
+  }
+
+  let middleImage = originalHeroImage;
+  if (slug === 'table-tennis') {
+    middleImage = '/images/sports/table-tennis-final-v3.jpg';
+  } else if (slug === 'snooker') {
+    middleImage = '/images/sports/new-snooker-middle.jpg';
+  } else if (slug === 'table-soccer') {
+    middleImage = '/images/sports/table-soccer-final-v3.jpg';
+  }
+
+  const hideThumbnails = ['table-tennis', 'snooker', 'table-soccer', 'badminton'].includes(slug);
 
   return (
     <>
@@ -218,7 +233,7 @@ export default async function SportDetailPage({ params }) {
       <div className="relative min-h-[380px] flex items-end overflow-hidden">
         <SafeImage
           src={heroImage}
-          alt={`${sport.name} at Champions Sports Arena`}
+          alt={`${sport.name} at Bharti Sports Arena`}
           fallbackText={sport.name}
           fill
           priority
@@ -243,11 +258,10 @@ export default async function SportDetailPage({ params }) {
 
       <Section>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Left Column - Gallery */}
           <div className="grid grid-cols-1 gap-4">
             <div className="relative rounded-2xl aspect-video w-full overflow-hidden group shadow-md">
               <SafeImage
-                src={heroImage}
+                src={middleImage}
                 alt={`${sport.name} main facility`}
                 fallbackText={sport.name}
                 fill
@@ -255,7 +269,8 @@ export default async function SportDetailPage({ params }) {
                 className="object-cover group-hover:scale-105 transition-transform duration-700"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            {!hideThumbnails && (
+              <div className="grid grid-cols-2 gap-4">
               {sport.galleryImageIds?.slice(0, 2).map((img, idx) => (
                 <div key={idx} className="relative rounded-xl aspect-video w-full overflow-hidden group shadow-sm">
                   <SafeImage
@@ -282,6 +297,7 @@ export default async function SportDetailPage({ params }) {
                 </div>
               ))}
             </div>
+            )}
           </div>
 
           {/* Right Column - Details */}

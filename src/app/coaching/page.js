@@ -10,8 +10,8 @@ import { CoachCard } from '@/components/shared/CoachCard';
 import { SchemaMarkup, generateServiceSchema } from '@/components/seo/SchemaMarkup';
 
 export const metadata = {
-  title: 'Professional Sports Coaching in Jaipur',
-  description: 'Beginner to advanced coaching across badminton, table tennis & more, led by professional coaches at Bharti Sports Arena, Jaipur.',
+  title: 'Professional Sports Coaching in Sikar',
+  description: 'Beginner to advanced coaching across badminton, table tennis & more, led by professional coaches at Bharti Sports Arena, Sikar.',
 };
 
 export default async function CoachingPage() {

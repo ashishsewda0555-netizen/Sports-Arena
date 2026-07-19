@@ -5,7 +5,7 @@ import { getGalleryImages } from '@/lib/data-fetchers';
 
 export const metadata = {
   title: 'Photo Gallery',
-  description: 'See our courts, coaching sessions, tournaments, and facilities at Bharti Sports Arena, Jaipur\'s premium sports arena.',
+  description: 'See our courts, coaching sessions, tournaments, and facilities at Bharti Sports Arena, Sikar\'s premium sports arena.',
 };
 
 export default async function GalleryPage() {

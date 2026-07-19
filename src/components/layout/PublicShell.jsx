@@ -3,7 +3,6 @@
 import { usePathname } from 'next/navigation';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { StickyContactBar } from '@/components/layout/StickyContactBar';
 
 /**
  * Wrapper that renders the public Header, Footer, and StickyContactBar
@@ -24,7 +23,6 @@ export function PublicShell({ children }) {
         {children}
       </main>
       <Footer />
-      <StickyContactBar />
     </>
   );
 }
