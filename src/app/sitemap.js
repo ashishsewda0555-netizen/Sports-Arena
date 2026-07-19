@@ -1,7 +1,9 @@
 import { getSports, getEvents } from '@/lib/data-fetchers';
 
 export default async function sitemap() {
-  const baseUrl = 'https://bhartisportsarena.com';
+  const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  'https://magnificent-speculoos-5bca4d.netlify.app';
 
   const [sports, events] = await Promise.all([
     getSports(),
