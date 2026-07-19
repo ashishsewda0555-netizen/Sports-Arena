@@ -40,7 +40,7 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ success, error, warning, info }}>
       {children}
-      <div className="fixed bottom-4 right-4 z-[200] flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+      <div className="fixed bottom-4 right-4 z-[200] flex flex-col gap-3 max-w-sm w-full pointer-events-none">
         {toasts.map((toast) => (
           <ToastItem key={toast.id} toast={toast} onRemove={() => removeToast(toast.id)} />
         ))}
@@ -66,14 +66,14 @@ function ToastItem({ toast, onRemove }) {
 
   return (
     <div className={cn(
-      "flex items-start gap-3 p-4 rounded-lg shadow-lg border pointer-events-auto transition-all animate-in slide-in-from-right-5 fade-in duration-300",
+      "flex items-start gap-3 p-4 rounded-xl shadow-xl border pointer-events-auto transition-all animate-in slide-in-from-right-5 fade-in duration-300 glass-heavy",
       bgStyles[toast.type]
     )}>
       <div className="flex-shrink-0 mt-0.5">{icons[toast.type]}</div>
       <p className="flex-1 text-sm font-medium">{toast.message}</p>
       <button 
         onClick={onRemove}
-        className="flex-shrink-0 text-text-secondary hover:text-text-primary transition-colors"
+        className="flex-shrink-0 text-text-secondary hover:text-text-primary transition-colors rounded-full p-1 hover:bg-black/5"
       >
         <X className="w-4 h-4" />
       </button>

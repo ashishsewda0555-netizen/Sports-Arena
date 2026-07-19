@@ -1,13 +1,15 @@
+import Image from 'next/image';
 import { FallbackImage } from '@/components/ui/FallbackImage';
 import { Section, SectionHeader } from '@/components/ui/Section';
 import { getAboutContent } from '@/lib/data-fetchers';
-import { Target, Lightbulb, Users, Trophy } from 'lucide-react';
+import { Target, Lightbulb, Star, Users, Trophy } from 'lucide-react';
 import { PhotoStrip } from '@/components/shared/PhotoStrip';
 import { ContactCta } from '@/components/shared/ContactCta';
+import { IMAGES } from '@/lib/images';
 
 export const metadata = {
   title: 'About Us',
-  description: 'Learn about Champions Sports Arena\'s story, mission, and world-class facilities serving Jaipur\'s sports community.',
+  description: "Learn about Bharti Sports Arena's story, mission, and facilities serving Jaipur's sports community.",
 };
 
 export default async function AboutPage() {
@@ -15,25 +17,29 @@ export default async function AboutPage() {
 
   return (
     <>
-      {/* HEADER BANNER */}
-      <div className="bg-surface-alt py-12 md:py-20 text-center">
-        <div className="container mx-auto px-4">
-          <h1 className="font-heading font-bold text-4xl lg:text-5xl mb-4">About Us</h1>
-          <div className="text-body-sm text-text-secondary uppercase tracking-wider font-semibold">
-            Home <span className="mx-2">/</span> About
-          </div>
+      {/* Page Banner */}
+      <div className="relative overflow-hidden" style={{ background: 'var(--gradient-page-banner)' }}>
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at 20% 80%, rgba(27,94,32,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(13,71,161,0.05) 0%, transparent 50%)' }} />
+        <div className="container mx-auto px-4 relative z-10 pt-32 pb-14 md:pt-36 lg:pt-40 lg:pb-16 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">About Us</h1>
+          <nav className="text-sm text-text-secondary font-medium uppercase tracking-wider">
+            Home <span className="mx-2 opacity-40">/</span> About
+          </nav>
         </div>
       </div>
 
       {/* OUR STORY */}
       <Section id="story">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="bg-surface-alt rounded-lg h-[400px] lg:h-[500px] relative overflow-hidden">
-            <FallbackImage 
-              src={content?.storyImageId?.url || ''} 
-              alt="Our Story" 
-              className="w-full h-full"
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+          <div className="rounded-2xl overflow-hidden shadow-xl group relative aspect-[4/3]">
+            <Image
+              src={content?.storyImageId?.url || IMAGES.story}
+              alt="Our Story"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-700"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
           <div>
             <SectionHeader
@@ -42,9 +48,12 @@ export default async function AboutPage() {
               align="left"
               className="mb-6"
             />
-            <div 
-              className="prose prose-lg prose-green max-w-none text-text-secondary"
-              dangerouslySetInnerHTML={{ __html: content?.storyHtml || '<p>Founded with a vision to create a world-class sporting environment, Sports Arena has grown from a single badminton court to a premier multi-sport facility.</p><p>We believe that sports is not just about physical fitness, but about building character, discipline, and community. Our state-of-the-art infrastructure combined with professional coaching ensures that every athlete, whether a beginner or a professional, has the perfect platform to achieve their goals.</p>' }}
+            <div
+              className="prose prose-lg prose-green dark:prose-invert max-w-none text-text-secondary leading-relaxed"
+              dangerouslySetInnerHTML={{
+                __html: content?.storyHtml ||
+                  '<p>Bharti Sports Arena was founded with a simple vision — to create a space where people of all ages can discover the joy of sports and build a healthier lifestyle.</p><p>We believe that sports is not just about physical fitness, but about building character, discipline, and community. Our modern indoor facility combined with professional coaching ensures that every player, whether a beginner or experienced, has the perfect platform to improve their game.</p>',
+              }}
             />
           </div>
         </div>
@@ -52,51 +61,54 @@ export default async function AboutPage() {
 
       {/* MISSION & VISION */}
       <Section alt id="mission-vision">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <div className="bg-surface p-8 rounded-lg border border-border shadow-sm text-center">
-            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6">
+        <SectionHeader
+          title="What Drives Us"
+          description="Our mission and vision define everything we do at Sports Arena."
+        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-8">
+          <div className="bg-white dark:bg-surface p-9 rounded-2xl border border-border shadow-sm text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-primary mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
               <Target className="w-8 h-8" />
             </div>
-            <h3 className="font-heading font-semibold text-2xl mb-4">Our Mission</h3>
-            <p className="text-text-secondary">
-              {content?.mission || "To provide accessible, world-class sporting facilities and professional coaching to nurture talent and promote a healthy, active lifestyle."}
+            <h3 className="font-heading font-bold text-2xl mb-4 text-text-primary">Our Mission</h3>
+            <p className="text-text-secondary leading-relaxed">
+              {content?.mission || 'To provide accessible, quality sporting facilities and professional coaching to nurture talent and promote a healthy, active lifestyle for people of all ages and skill levels.'}
             </p>
           </div>
-          <div className="bg-surface p-8 rounded-lg border border-border shadow-sm text-center">
-            <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center text-[#1A1F1B] mx-auto mb-6">
+          <div className="bg-white dark:bg-surface p-9 rounded-2xl border border-border shadow-sm text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center text-accent mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
               <Lightbulb className="w-8 h-8" />
             </div>
-            <h3 className="font-heading font-semibold text-2xl mb-4">Our Vision</h3>
-            <p className="text-text-secondary">
-              {content?.vision || "To be the premier destination for sports enthusiasts, fostering a community of champions and lifelong learners."}
+            <h3 className="font-heading font-bold text-2xl mb-4 text-text-primary">Our Vision</h3>
+            <p className="text-text-secondary leading-relaxed">
+              {content?.vision || 'To be a trusted destination for sports enthusiasts in Jaipur — fostering a growing community of players, learners, and passionate athletes.'}
             </p>
           </div>
         </div>
       </Section>
 
-      {/* INFRASTRUCTURE */}
-      <Section id="infrastructure">
+      {/* OUR FACILITIES */}
+      <Section id="facilities">
         <SectionHeader
-          overline="FACILITIES"
-          title="World-Class Infrastructure"
-          description="Built to BWF and international standards to ensure the best playing experience."
+          overline="WHAT WE OFFER"
+          title="Our Facilities"
+          description="A modern indoor sports academy built for comfort, quality, and performance."
         />
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center mt-12 max-w-5xl mx-auto">
-          <div className="p-6">
-            <div className="font-heading font-bold text-5xl text-primary mb-4">25k</div>
-            <h4 className="font-semibold text-lg mb-2">Sq.Ft Area</h4>
-            <p className="text-body-sm text-text-secondary">Sprawling facility designed for optimal airflow and space.</p>
-          </div>
-          <div className="p-6 border-y sm:border-y-0 sm:border-x border-border">
-            <div className="font-heading font-bold text-5xl text-primary mb-4">12+</div>
-            <h4 className="font-semibold text-lg mb-2">Courts & Tables</h4>
-            <p className="text-body-sm text-text-secondary">BWF approved synthetic mats and ITTF certified tables.</p>
-          </div>
-          <div className="p-6">
-            <div className="font-heading font-bold text-5xl text-primary mb-4">24/7</div>
-            <h4 className="font-semibold text-lg mb-2">Security & Power</h4>
-            <p className="text-body-sm text-text-secondary">Uninterrupted play with full power backup and CCTV.</p>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 max-w-5xl mx-auto">
+          {[
+            { icon: Trophy, title: 'Badminton Courts', desc: '2 professionally maintained indoor badminton courts with quality flooring.' },
+            { icon: Star, title: 'Table Sports', desc: 'Table tennis and snooker tables available for all skill levels.' },
+            { icon: Users, title: 'Expert Coaches', desc: '3 dedicated coaches providing personalized training and guidance.' },
+            { icon: Target, title: 'Growing Community', desc: 'A vibrant and welcoming badminton community for players of all ages.' },
+          ].map((item, i) => (
+            <div key={i} className="bg-white dark:bg-surface p-8 rounded-2xl border border-border shadow-sm text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-primary mx-auto mb-5 group-hover:scale-110 transition-transform duration-300">
+                <item.icon className="w-7 h-7" />
+              </div>
+              <h4 className="font-heading font-bold text-lg text-text-primary mb-2">{item.title}</h4>
+              <p className="text-sm text-text-secondary leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </Section>
 

@@ -1,70 +1,179 @@
 import Link from 'next/link';
-import { Section } from '@/components/ui/Section';
+import Image from 'next/image';
+import { SafeImage } from '@/components/ui/SafeImage';
+import { Section, SectionHeader } from '@/components/ui/Section';
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import { getSports } from '@/lib/data-fetchers';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Trophy, Dumbbell, Table2, Target } from 'lucide-react';
 import { ContactCta } from '@/components/shared/ContactCta';
-import { FallbackImage } from '@/components/ui/FallbackImage';
-import { Trophy } from 'lucide-react';
+import { IMAGES, getSportImage } from '@/lib/images';
 
 export const metadata = {
   title: 'Our Sports & Activities',
-  description: 'Explore badminton, table tennis, snooker, carrom, chess, ludo & fitness facilities at Champions Sports Arena, Jaipur.',
+  description: 'Explore badminton, table tennis, snooker, carrom, chess & fitness facilities at Bharti Sports Arena, Jaipur.',
 };
 
+/** Curated fallback sports for when the DB is empty */
+const FALLBACK_SPORTS = [
+  {
+    _id: 'fb-badminton',
+    name: 'Badminton',
+    slug: 'badminton',
+    category: 'racquet',
+    shortDescription: 'Professional indoor courts with BWF-approved synthetic mats and anti-glare LED lighting.',
+    image: IMAGES.badminton,
+  },
+  {
+    _id: 'fb-table-tennis',
+    name: 'Table Tennis',
+    slug: 'table-tennis',
+    category: 'racquet',
+    shortDescription: 'ITTF certified tables in a dedicated hall. Perfect for beginners and competitive players.',
+    image: IMAGES.tableTennis,
+  },
+  {
+    _id: 'fb-fitness',
+    name: 'Fitness Zone',
+    slug: 'fitness',
+    category: 'fitness',
+    shortDescription: 'Fully equipped gym with cardio, free weights, strength machines, and expert trainers.',
+    image: IMAGES.fitness,
+  },
+  {
+    _id: 'fb-snooker',
+    name: 'Snooker',
+    slug: 'snooker',
+    category: 'cue-sports',
+    shortDescription: 'Premium snooker tables in a relaxed, well-lit environment for casual and serious players.',
+    image: IMAGES.snooker,
+  },
+  {
+    _id: 'fb-chess',
+    name: 'Chess & Strategy',
+    slug: 'chess',
+    category: 'mind-sports',
+    shortDescription: 'Dedicated zones for chess and other mind sports. Build your strategic thinking.',
+    image: IMAGES.chess,
+  },
+  {
+    _id: 'fb-carrom',
+    name: 'Carrom',
+    slug: 'carrom',
+    category: 'board-sports',
+    shortDescription: 'Traditional Indian board game available for all age groups in a friendly setting.',
+    image: IMAGES.carrom,
+  },
+];
+
 export default async function SportsListingPage() {
-  const sports = await getSports();
+  const dbSports = await getSports();
+  const sports = dbSports && dbSports.length > 0 ? dbSports : FALLBACK_SPORTS;
+  const usingFallback = !dbSports || dbSports.length === 0;
 
   return (
     <>
-      <div className="bg-surface-alt py-12 md:py-20 text-center">
-        <div className="container mx-auto px-4">
-          <h1 className="font-heading font-bold text-4xl lg:text-5xl mb-4">Our Sports & Activities</h1>
-          <div className="text-body-sm text-text-secondary uppercase tracking-wider font-semibold">
-            Home <span className="mx-2">/</span> Sports
+      {/* Page Banner */}
+      <div className="relative overflow-hidden" style={{ background: 'var(--gradient-page-banner)' }}>
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at 20% 80%, rgba(27,94,32,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(13,71,161,0.06) 0%, transparent 50%)' }} />
+        <div className="container mx-auto px-4 relative z-10 pt-32 pb-14 md:pt-36 lg:pt-40 lg:pb-16 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-semibold mb-5">
+            <Trophy className="w-4 h-4" />
+            World-Class Facilities
           </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">Our Sports &amp; Activities</h1>
+          <nav className="text-sm text-text-secondary font-medium uppercase tracking-wider">
+            <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+            <span className="mx-2 opacity-40">/</span>
+            <span>Sports</span>
+          </nav>
         </div>
       </div>
 
       <Section>
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <p className="text-body-lg text-text-secondary">
-            From high-intensity racquet sports to strategic mind games and complete fitness solutions, we offer world-class facilities for every enthusiast.
+          <p className="text-lg text-text-secondary leading-relaxed">
+            From high-intensity racquet sports to strategic mind games and complete fitness solutions,
+            we offer world-class facilities for every enthusiast.
           </p>
+          {usingFallback && (
+            <p className="text-sm text-text-disabled mt-3 italic">
+              Showing featured sports — visit us for the full experience!
+            </p>
+          )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {sports?.map((sport) => (
-            <Card key={sport._id} className="flex flex-col group hover:shadow-md transition-shadow">
-              <div className="h-48 bg-surface-alt relative overflow-hidden">
-                <FallbackImage 
-                  src={sport.featuredImageId?.url || ''} 
-                  alt={sport.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                />
-                <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/90 p-2 rounded-full shadow-sm text-primary">
-                  <Trophy className="w-6 h-6" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sports.map((sport) => {
+            const imgSrc = sport.image || getSportImage(sport);
+            const href = `/sports/${sport.slug}`;
+            return (
+              <Card key={sport._id} className="flex flex-col group overflow-hidden">
+                {/* Image */}
+                <div className="relative h-[220px] md:h-[250px] lg:h-[320px] overflow-hidden">
+                  <SafeImage
+                    src={imgSrc}
+                    alt={sport.name}
+                    fallbackText={sport.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Category badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-xs font-bold uppercase tracking-wider text-white bg-primary/80 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                      {sport.category?.replace(/-/g, ' ')}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <CardHeader>
-                <div className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
-                  {sport.category?.replace('-', ' ')}
-                </div>
-                <CardTitle>{sport.name}</CardTitle>
-                <CardDescription className="line-clamp-2">{sport.shortDescription}</CardDescription>
-              </CardHeader>
-              <CardFooter className="mt-auto pt-0">
-                <Button asChild variant="ghost" className="p-0 h-auto">
-                  <Link href={`/sports/${sport.slug}`} className="flex items-center text-primary group-hover:text-primary-dark transition-colors">
-                    Explore {sport.name} <ArrowRight className="w-4 h-4 ml-2" />
+
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-xl">{sport.name}</CardTitle>
+                  <CardDescription className="line-clamp-2 mt-1">{sport.shortDescription}</CardDescription>
+                </CardHeader>
+
+                <CardFooter className="mt-auto pt-2 pb-5">
+                  <Link
+                    href={href}
+                    className="inline-flex items-center gap-1.5 text-sm font-bold text-primary hover:text-primary-dark transition-colors group/link"
+                  >
+                    Explore {sport.name}
+                    <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                   </Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+                </CardFooter>
+              </Card>
+            );
+          })}
         </div>
       </Section>
+
+      {/* Why Sports Arena CTA band */}
+      <div className="bg-surface-alt border-y border-border py-14">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-text-primary mb-3">Not sure which sport to try?</h2>
+          <p className="text-text-secondary mb-8 max-w-lg mx-auto">
+            Book a free trial session and our coaches will help you find the perfect sport for you.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href="https://wa.me/919352812625"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 h-13 px-8 py-3 rounded-lg bg-primary text-white font-bold hover:bg-primary-dark transition-colors shadow-md"
+            >
+              Book a Free Trial
+            </a>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 h-13 px-8 py-3 rounded-lg border-2 border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </div>
+
       <ContactCta />
     </>
   );

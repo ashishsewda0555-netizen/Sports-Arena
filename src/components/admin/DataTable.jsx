@@ -29,35 +29,47 @@ export function DataTable({
 
   if (isLoading) {
     return (
-      <div className="w-full h-64 flex items-center justify-center bg-surface rounded-lg border border-border">
-        <div className="animate-spin w-8 h-8 border-4 border-secondary border-t-transparent rounded-full" />
+      <div className="w-full bg-surface rounded-2xl border border-border overflow-hidden">
+        <div className="p-4 space-y-3">
+          {[...Array(5)].map((_, i) => (
+            <div key={i} className="flex gap-4 animate-pulse">
+              <div className="h-10 bg-surface-alt rounded-lg flex-1" />
+              <div className="h-10 bg-surface-alt rounded-lg flex-1" />
+              <div className="h-10 bg-surface-alt rounded-lg w-24" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
 
   if (!data || data.length === 0) {
     return (
-      <div className="w-full py-12 flex flex-col items-center justify-center bg-surface rounded-lg border border-border">
-        <p className="text-text-secondary text-lg">No records found.</p>
+      <div className="w-full py-16 flex flex-col items-center justify-center bg-surface rounded-2xl border border-border">
+        <div className="w-14 h-14 rounded-2xl bg-surface-alt flex items-center justify-center mb-4">
+          <MoreHorizontal className="w-6 h-6 text-text-disabled" />
+        </div>
+        <p className="text-text-secondary text-lg font-medium">No records found.</p>
+        <p className="text-text-disabled text-sm mt-1">Create your first entry to get started.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto bg-surface rounded-lg border border-border">
+    <div className="overflow-x-auto bg-surface rounded-2xl border border-border">
       <table className="w-full text-left text-sm text-text-primary">
-        <thead className="bg-surface-alt border-b border-border uppercase text-xs text-text-secondary">
+        <thead className="bg-surface-alt/70 border-b border-border uppercase text-xs text-text-secondary">
           <tr>
             {columns.map((col) => (
               <th 
                 key={col.key} 
-                className={`px-6 py-4 font-medium ${col.sortable !== false ? 'cursor-pointer hover:bg-black/5' : ''}`}
+                className={`px-6 py-4 font-medium ${col.sortable !== false ? 'cursor-pointer hover:bg-surface-alt transition-colors' : ''}`}
                 onClick={() => col.sortable !== false && handleSort(col.key)}
               >
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   {col.label}
                   {sortConfig?.key === col.key && (
-                    sortConfig.direction === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />
+                    sortConfig.direction === 'asc' ? <ChevronUp className="w-3.5 h-3.5 text-primary" /> : <ChevronDown className="w-3.5 h-3.5 text-primary" />
                   )}
                 </div>
               </th>
@@ -69,7 +81,7 @@ export function DataTable({
         </thead>
         <tbody className="divide-y divide-border">
           {sortedData.map((row) => (
-            <tr key={row[keyField]} className="hover:bg-bg/50 transition-colors">
+            <tr key={row[keyField]} className="hover:bg-surface-alt/50 transition-colors">
               {columns.map((col) => (
                 <td key={col.key} className="px-6 py-4 whitespace-nowrap">
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
@@ -77,11 +89,11 @@ export function DataTable({
               ))}
               {(onEdit || onDelete) && (
                 <td className="px-6 py-4 whitespace-nowrap text-right">
-                  <div className="flex items-center justify-end gap-3">
+                  <div className="flex items-center justify-end gap-2">
                     {onEdit && (
                       <button 
                         onClick={() => onEdit(row)}
-                        className="text-text-secondary hover:text-primary transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded-lg text-text-secondary hover:text-primary hover:bg-primary/10 transition-all"
                         title="Edit"
                       >
                         <Edit className="w-4 h-4" />
@@ -90,7 +102,7 @@ export function DataTable({
                     {onDelete && (
                       <button 
                         onClick={() => onDelete(row)}
-                        className="text-text-secondary hover:text-error transition-colors"
+                        className="w-8 h-8 flex items-center justify-center rounded-lg text-text-secondary hover:text-error hover:bg-error/10 transition-all"
                         title="Delete"
                       >
                         <Trash2 className="w-4 h-4" />

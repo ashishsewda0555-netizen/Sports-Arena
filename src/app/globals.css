@@ -4,46 +4,9 @@
    ========================================================================== */
 
 @import '../styles/tokens.css';
+@import "tailwindcss";
+@config '../../tailwind.config.js';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* --------------------------------------------------------------------------
-   Font Face Declarations (Self-hosted for performance)
-   Using font-display: swap to avoid layout shift
-   -------------------------------------------------------------------------- */
-@font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/poppins-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Poppins';
-  src: url('/fonts/poppins-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/inter-400.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Inter';
-  src: url('/fonts/inter-500.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* --------------------------------------------------------------------------
    CSS Reset & Base
@@ -129,13 +92,13 @@ p {
    Links
    -------------------------------------------------------------------------- */
 a {
-  color: var(--color-secondary);
+  color: inherit;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--color-primary);
 }
 
 /* --------------------------------------------------------------------------
@@ -249,16 +212,24 @@ select {
    Section Pattern (alternating backgrounds)
    -------------------------------------------------------------------------- */
 .section {
-  padding: var(--space-12) 0;
+  padding: var(--section-py-mobile) 0;
+  scroll-margin-top: 80px; /* 64px header + 16px buffer */
 }
 
 .section--alt {
   background-color: var(--color-surface);
 }
 
+@media (min-width: 768px) {
+  .section {
+    padding: var(--section-py-tablet) 0;
+  }
+}
+
 @media (min-width: 1024px) {
   .section {
-    padding: var(--space-16) 0;
+    padding: var(--section-py-desktop) 0;
+    scroll-margin-top: 96px; /* 80px header + 16px buffer */
   }
 }
 
@@ -270,10 +241,10 @@ select {
   font-size: var(--fs-overline);
   font-weight: var(--fw-semibold);
   line-height: var(--lh-overline);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-primary);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 /* --------------------------------------------------------------------------
@@ -303,6 +274,90 @@ select {
 
 .section-header--left p {
   margin-left: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Page Banner (Unified header for all inner pages)
+   -------------------------------------------------------------------------- */
+.page-banner {
+  background: 
+    linear-gradient(120deg, rgba(5,20,10,0.85) 0%, rgba(5,20,60,0.75) 55%, rgba(5,20,10,0.85) 100%),
+    url('/images/gallery-header.png');
+  background-size: cover;
+  background-position: center;
+  padding: 120px 0 40px; /* Accounts for fixed header */
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.page-banner::before {
+  content: none;
+}
+
+.dark .page-banner::before {
+  content: none;
+}
+
+@media (min-width: 768px) {
+  .page-banner {
+    padding: 140px 0 50px;
+    min-height: 220px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-banner {
+    padding: 180px 0 80px;
+    min-height: 320px;
+  }
+}
+
+.page-banner h1 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  font-size: 40px;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+@media (min-width: 768px) {
+  .page-banner h1 {
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-banner h1 {
+    font-size: 56px;
+  }
+}
+
+.page-banner .breadcrumb {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: var(--fw-semibold);
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .page-banner .breadcrumb {
+    font-size: 18px;
+  }
+}
+
+.page-banner .breadcrumb span {
+  opacity: 0.6;
 }
 
 /* --------------------------------------------------------------------------
@@ -352,6 +407,175 @@ select {
     font-size: var(--fs-body);
     line-height: var(--lh-body);
   }
+}
+
+/* --------------------------------------------------------------------------
+   Keyframe Animations
+   -------------------------------------------------------------------------- */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(27, 94, 32, 0.3); }
+  50% { box-shadow: 0 0 20px 4px rgba(27, 94, 32, 0.15); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --------------------------------------------------------------------------
+   Animation Utilities
+   -------------------------------------------------------------------------- */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, var(--color-surface-alt) 25%, var(--color-surface) 50%, var(--color-surface-alt) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* Stagger delay classes */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* --------------------------------------------------------------------------
+   Premium Utilities
+   -------------------------------------------------------------------------- */
+
+/* Glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+}
+
+.glass-heavy {
+  background: var(--glass-bg-heavy);
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+  border: 1px solid var(--glass-border);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Hover zoom for images */
+.hover-zoom {
+  overflow: hidden;
+}
+
+.hover-zoom img,
+.hover-zoom > div {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-zoom:hover img,
+.hover-zoom:hover > div {
+  transform: scale(1.05);
+}
+
+/* Hide scrollbar utility */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Decorative dot pattern */
+.dot-pattern {
+  background-image: radial-gradient(circle, var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* --------------------------------------------------------------------------

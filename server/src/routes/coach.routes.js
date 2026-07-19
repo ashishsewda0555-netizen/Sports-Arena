@@ -13,6 +13,21 @@ import {
   reorderCoaches,
 } from '../controllers/coach.controller.js';
 
+import multer from 'multer';
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  fileFilter: (_req, file, cb) => {
+    const allowed = ['image/jpeg', 'image/png', 'image/webp'];
+    if (allowed.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Allowed: JPEG, PNG, WebP'), false);
+    }
+  },
+});
+
 const router = Router();
 
 // ── Public ─────────────────────────────────────────────────────────────────
@@ -25,6 +40,7 @@ router.post(
   '/admin/coaches',
   authenticate,
   requireAuth,
+  upload.single('image'),
   validate(createCoachSchema),
   createCoach
 );
@@ -32,6 +48,7 @@ router.put(
   '/admin/coaches/:id',
   authenticate,
   requireAuth,
+  upload.single('image'),
   validate(updateCoachSchema),
   updateCoach
 );

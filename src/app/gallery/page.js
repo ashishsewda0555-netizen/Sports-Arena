@@ -5,7 +5,7 @@ import { getGalleryImages } from '@/lib/data-fetchers';
 
 export const metadata = {
   title: 'Photo Gallery',
-  description: 'See our courts, coaching sessions, tournaments, and facilities at Champions Sports Arena, Jaipur\'s premium sports arena.',
+  description: 'See our courts, coaching sessions, tournaments, and facilities at Bharti Sports Arena, Jaipur\'s premium sports arena.',
 };
 
 export default async function GalleryPage() {
@@ -13,10 +13,10 @@ export default async function GalleryPage() {
 
   return (
     <>
-      <div className="bg-surface-alt py-12 md:py-20 text-center">
-        <div className="container mx-auto px-4">
-          <h1 className="font-heading font-bold text-4xl lg:text-5xl mb-4">Gallery</h1>
-          <div className="text-body-sm text-text-secondary uppercase tracking-wider font-semibold">
+      <div className="page-banner">
+        <div className="container mx-auto px-4 relative z-10">
+          <h1>Gallery</h1>
+          <div className="breadcrumb">
             Home <span className="mx-2">/</span> Gallery
           </div>
         </div>

@@ -54,7 +54,9 @@ export default function ContactInfoAdmin() {
         reset(data);
       }
     } catch (err) {
-      console.error(err);
+      if (!err.message?.includes('not configured')) {
+        console.error(err);
+      }
     } finally {
       setLoading(false);
     }

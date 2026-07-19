@@ -13,7 +13,7 @@ import announcementRoutes from './announcement.routes.js';
 import contactInfoRoutes from './contactInfo.routes.js';
 import operatingHoursRoutes from './operatingHours.routes.js';
 import socialLinksRoutes from './socialLinks.routes.js';
-import videoRoutes from './video.routes.js';
+
 
 const router = Router();
 
@@ -34,6 +34,6 @@ router.use(announcementRoutes);
 router.use(contactInfoRoutes);
 router.use(operatingHoursRoutes);
 router.use(socialLinksRoutes);
-router.use(videoRoutes);
+
 
 export default router;

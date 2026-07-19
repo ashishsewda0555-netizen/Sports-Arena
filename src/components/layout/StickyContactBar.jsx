@@ -6,7 +6,7 @@ import { cn, getWhatsAppLink, getTelLink, getDirectionsLink } from '@/lib/utils'
 
 export function StickyContactBar() {
   const [isVisible, setIsVisible] = useState(false);
-  const phone = '+919876543210';
+  const phone = '+919352812625';
   const lat = '12.9716';
   const lng = '77.5946';
 
@@ -23,13 +23,13 @@ export function StickyContactBar() {
   return (
     <div
       className={cn(
-        'fixed bottom-0 left-0 right-0 h-[56px] bg-bg border-t border-border shadow-lg z-sticky-bar flex transition-transform duration-300 lg:hidden',
+        'fixed bottom-0 left-0 right-0 h-[56px] glass-heavy shadow-[0_-4px_20px_rgba(0,0,0,0.1)] z-sticky-bar flex transition-transform duration-300 lg:hidden',
         isVisible ? 'translate-y-0' : 'translate-y-full'
       )}
     >
       <a
         href={getTelLink(phone)}
-        className="flex-1 flex flex-col items-center justify-center gap-1 text-text-primary hover:bg-surface active:bg-surface-alt transition-colors"
+        className="flex-1 flex flex-col items-center justify-center gap-1 text-text-primary hover:bg-primary/5 active:bg-primary/10 transition-colors"
       >
         <PhoneCall className="w-5 h-5 text-primary" />
         <span className="text-[10px] font-semibold uppercase tracking-wider">Call</span>
@@ -39,17 +39,17 @@ export function StickyContactBar() {
         href={getWhatsAppLink(phone, 'Hi, I would like to know more about Sports Arena.')}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 flex flex-col items-center justify-center gap-1 bg-accent text-[#1A1F1B] hover:brightness-95 active:brightness-90 transition-colors"
+        className="flex-1 flex flex-col items-center justify-center gap-1 bg-gradient-to-r from-accent to-[#FF8F00] text-[#1A1F1B] hover:brightness-95 active:brightness-90 transition-all"
       >
         <MessageCircle className="w-5 h-5" />
-        <span className="text-[10px] font-semibold uppercase tracking-wider">WhatsApp</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider">WhatsApp</span>
       </a>
 
       <a
         href={getDirectionsLink(lat, lng)}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 flex flex-col items-center justify-center gap-1 text-text-primary hover:bg-surface active:bg-surface-alt transition-colors"
+        className="flex-1 flex flex-col items-center justify-center gap-1 text-text-primary hover:bg-primary/5 active:bg-primary/10 transition-colors"
       >
         <Navigation className="w-5 h-5 text-primary" />
         <span className="text-[10px] font-semibold uppercase tracking-wider">Directions</span>

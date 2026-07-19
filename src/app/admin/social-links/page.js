@@ -39,7 +39,9 @@ export default function SocialLinksAdmin() {
       });
       if (data) reset(data);
     } catch (err) {
-      console.error(err);
+      if (!err.message?.includes('not configured')) {
+        console.error(err);
+      }
     } finally {
       setLoading(false);
     }

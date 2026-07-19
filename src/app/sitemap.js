@@ -1,7 +1,7 @@
 import { getSports, getEvents } from '@/lib/data-fetchers';
 
 export default async function sitemap() {
-  const baseUrl = 'https://championssportsarena.com';
+  const baseUrl = 'https://bhartisportsarena.com';
 
   const [sports, events] = await Promise.all([
     getSports(),

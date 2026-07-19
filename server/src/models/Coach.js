@@ -11,6 +11,9 @@ const coachSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'GalleryImage',
     },
+    imageUrl: {
+      type: String,
+    },
     specializations: [
       {
         type: mongoose.Schema.Types.ObjectId,

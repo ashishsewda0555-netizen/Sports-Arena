@@ -1,36 +1,203 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏸 Bharti Sports Arena
 
-## Getting Started
+A modern, responsive, full-stack sports arena website built using **Next.js**, **React**, **Tailwind CSS**, **Node.js**, **Express.js**, and **MongoDB**.
 
-First, run the development server:
+The website serves as the official online presence of Bharti Sports Arena, allowing visitors to explore facilities, coaching programs, sports offered, pricing, gallery, events, and contact information, while providing an admin dashboard for easy content management.
+
+---
+
+## 🌟 Features
+
+### Public Website
+
+- Modern responsive UI
+- Hero section with sports arena showcase
+- About Us page
+- Sports offered
+- Professional Coaching
+- Indoor Facilities
+- Pricing Plans
+- Gallery
+- Testimonials
+- FAQs
+- Events & Announcements
+- Contact Form
+- Google Maps integration
+- SEO optimized
+- Mobile friendly
+- Fast loading
+
+---
+
+### Admin Dashboard
+
+Secure admin panel for managing:
+
+- Coaches
+- Sports
+- Gallery Images
+- Testimonials
+- Events
+- Announcements
+- FAQs
+- Pricing Plans
+- Contact Information
+- Social Media Links
+- Operating Hours
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- Next.js 15
+- React
+- Tailwind CSS
+- Framer Motion
+- React Icons
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+### Authentication
+
+- JWT Authentication
+
+### Media Storage
+
+- Cloudinary
+
+### Deployment
+
+- Netlify (Frontend)
+- Render (Backend)
+- MongoDB Atlas
+
+---
+
+## 📂 Project Structure
+
+```
+sports-arena
+│
+├── src/
+│   ├── app/
+│   ├── components/
+│   ├── lib/
+│   ├── styles/
+│
+├── server/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── validators/
+│
+├── public/
+├── package.json
+└── README.md
+```
+
+---
+
+## ⚙ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/your-username/bharti-sports-arena.git
+```
+
+Move into the project
+
+```bash
+cd sports-arena
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the frontend
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the backend
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm run server
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Environment Variables
 
-To learn more about Next.js, take a look at the following resources:
+Create a `.env.local` file in the root directory.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Example:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+NEXT_PUBLIC_API_URL=
 
-## Deploy on Vercel
+MONGODB_URI=
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+JWT_SECRET=
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+```
+
+> Do **not** commit your `.env` or `.env.local` files.
+
+---
+
+## Screens
+
+- Home
+- About
+- Sports
+- Coaching
+- Facilities
+- Pricing
+- Gallery
+- Testimonials
+- FAQs
+- Events
+- Contact
+- Admin Dashboard
+
+---
+
+## Future Improvements
+
+- Online Court Booking
+- Membership Portal
+- Payment Gateway
+- Tournament Registration
+- Attendance Tracking
+- Push Notifications
+- Multi-admin Support
+
+---
+
+## Author
+
+**Ashish**
+
+B.Tech CSE Student
+
+---
+
+## License
+
+This project is created for educational and commercial portfolio purposes.

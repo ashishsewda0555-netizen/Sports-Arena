@@ -83,13 +83,6 @@ export const ANNOUNCEMENT_TYPES = [
   { value: 'warning', label: 'Warning' },
 ];
 
-// ── Video Placements ───────────────────────────────────────────────────────
-export const VIDEO_PLACEMENTS = [
-  { value: 'homepage-arena-tour', label: 'Homepage Arena Tour' },
-  { value: 'gallery', label: 'Gallery' },
-  { value: 'general', label: 'General' },
-];
-
 // ── Batch Levels ───────────────────────────────────────────────────────────
 export const BATCH_LEVELS = [
   { value: 'junior', label: 'Junior' },
@@ -201,7 +194,6 @@ export const ADMIN_NAV_LINKS = [
   { href: '/admin/contact-info', label: 'Contact Info', icon: 'Phone' },
   { href: '/admin/operating-hours', label: 'Operating Hours', icon: 'Clock' },
   { href: '/admin/social-media', label: 'Social Media', icon: 'Share2' },
-  { href: '/admin/videos', label: 'Videos', icon: 'Video' },
   { href: '/admin/leads', label: 'Leads Inbox', icon: 'Inbox' },
   { href: '/admin/users', label: 'Users', icon: 'UserCog' },
 ];

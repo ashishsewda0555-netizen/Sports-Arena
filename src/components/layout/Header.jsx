@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { Menu, X, PhoneCall, MessageCircle } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { cn } from '@/lib/utils';
 
@@ -19,17 +19,8 @@ const navLinks = [
 ];
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -39,25 +30,22 @@ export function Header() {
   return (
     <>
       <header
-        className={cn(
-          'fixed top-0 left-0 right-0 z-header transition-all duration-300',
-          isScrolled || isMobileMenuOpen
-            ? 'bg-bg border-b border-border shadow-sm'
-            : 'bg-transparent'
-        )}
+        className="fixed top-0 left-0 right-0 z-[200] transition-all duration-300 bg-[rgba(255,255,255,0.95)] dark:bg-[rgba(10,12,20,0.95)] backdrop-blur-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.15)] dark:shadow-[0_2px_8px_rgba(0,0,0,0.4)] border-b border-black/5 dark:border-white/[0.08]"
       >
         <div className="container mx-auto px-4 h-16 lg:h-20 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            {/* Simple Text Logo for now */}
-            <span className="font-heading font-bold text-2xl text-primary">
-              SportsArena
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
+            <div className="w-10 h-10 rounded-xl overflow-hidden relative shrink-0">
+              <Image src="/images/logo.jpg" alt="Bharti Sports Arena Logo" fill className="object-cover" sizes="40px" />
+            </div>
+            <span className="font-heading font-bold text-xl transition-colors text-text-primary">
+              Bharti Sports Arena
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            <ul className="flex gap-6">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-8 xl:gap-10">
+            <ul className="flex items-center gap-5 lg:gap-9">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
@@ -65,36 +53,50 @@ export function Header() {
                     <Link
                       href={link.href}
                       className={cn(
-                        'text-base font-medium transition-colors hover:text-primary',
-                        isActive ? 'text-primary' : 'text-text-primary'
+                        'relative text-sm font-semibold py-2 transition-all duration-300 tracking-wide whitespace-nowrap group',
+                        isActive 
+                          ? 'text-primary' 
+                          : 'text-text-secondary hover:text-primary'
                       )}
                     >
                       {link.name}
+                      <span className={cn(
+                        "absolute -bottom-1 left-0 h-0.5 bg-current rounded-full transition-all duration-300",
+                        isActive ? "w-full opacity-100" : "w-0 opacity-0 group-hover:w-full group-hover:opacity-70"
+                      )} />
                     </Link>
                   </li>
                 );
               })}
             </ul>
 
-            <div className="flex items-center gap-4 border-l border-border pl-6">
+            <div className="flex items-center gap-3 border-l border-border/50 pl-5 ml-1">
               <ThemeToggle />
-              <Button size="sm" className="hidden xl:flex">
-                <PhoneCall className="w-4 h-4 mr-2" />
+              <a
+                href="tel:+919352812625"
+                className="hidden xl:flex items-center gap-2 h-9 px-4 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors shadow-sm"
+              >
+                <PhoneCall className="w-4 h-4" />
                 Call Now
-              </Button>
-              <Button size="sm" variant="accent" className="hidden xl:flex">
-                <MessageCircle className="w-4 h-4 mr-2" />
+              </a>
+              <a
+                href="https://wa.me/919352812625"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden xl:flex items-center gap-2 h-9 px-4 rounded-lg bg-accent text-gray-900 text-sm font-bold hover:opacity-90 transition-opacity shadow-sm"
+              >
+                <MessageCircle className="w-4 h-4" />
                 WhatsApp
-              </Button>
+              </a>
             </div>
           </nav>
 
           {/* Mobile Menu Toggle */}
-          <div className="flex lg:hidden items-center gap-4">
+          <div className="flex md:hidden items-center gap-3">
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="text-text-primary p-1"
+              className="p-2 rounded-lg transition-colors text-text-primary hover:bg-surface-alt"
               aria-label="Open Menu"
             >
               <Menu className="w-6 h-6" />
@@ -106,7 +108,7 @@ export function Header() {
       {/* Mobile Navigation Drawer Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-overlay z-mobile-nav lg:hidden"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[400] md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
@@ -114,25 +116,31 @@ export function Header() {
       {/* Mobile Navigation Drawer */}
       <div
         className={cn(
-          'fixed top-0 right-0 bottom-0 w-[80%] max-w-sm bg-bg z-[401] shadow-lg transform transition-transform duration-300 ease-in-out lg:hidden flex flex-col',
+          'fixed top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white dark:bg-surface z-[401] shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden flex flex-col border-l border-border',
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        <div className="p-4 flex justify-between items-center border-b border-border">
-          <span className="font-heading font-bold text-xl text-primary">
-            Menu
-          </span>
+        {/* Drawer Header */}
+        <div className="px-6 py-5 flex justify-between items-center border-b border-border bg-surface">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl overflow-hidden relative shrink-0">
+              <Image src="/images/logo.jpg" alt="Bharti Sports Arena Logo" fill className="object-cover" sizes="36px" />
+            </div>
+            <span className="font-heading font-bold text-lg text-text-primary">
+              Bharti Sports Arena
+            </span>
+          </div>
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="text-text-primary p-2 hover:bg-surface rounded-full"
+            className="text-text-secondary p-2 hover:bg-surface-alt rounded-full transition-colors"
             aria-label="Close Menu"
           >
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        <nav className="p-6 flex-grow overflow-y-auto">
-          <ul className="flex flex-col gap-6">
+        <nav className="px-3 py-5 flex-grow overflow-y-auto bg-white dark:bg-surface">
+          <ul className="flex flex-col gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -140,10 +148,13 @@ export function Header() {
                   <Link
                     href={link.href}
                     className={cn(
-                      'text-lg font-medium transition-colors block',
-                      isActive ? 'text-primary' : 'text-text-primary'
+                      'flex items-center gap-3 px-4 py-3.5 rounded-xl text-base font-semibold transition-all duration-200',
+                      isActive 
+                        ? 'text-primary bg-primary/10 border border-primary/20' 
+                        : 'text-text-primary hover:bg-surface-alt hover:text-primary'
                     )}
                   >
+                    {isActive && <span className="w-1.5 h-5 bg-primary rounded-full shrink-0" />}
                     {link.name}
                   </Link>
                 </li>
@@ -152,15 +163,23 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="p-6 border-t border-border flex flex-col gap-4">
-          <Button className="w-full justify-center">
-            <PhoneCall className="w-5 h-5 mr-2" />
+        <div className="p-5 border-t border-border flex flex-col gap-3 bg-surface-alt/50">
+          <a
+            href="tel:+919352812625"
+            className="flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-primary text-white font-semibold hover:bg-primary-dark transition-colors"
+          >
+            <PhoneCall className="w-5 h-5" />
             Call Now
-          </Button>
-          <Button variant="accent" className="w-full justify-center">
-            <MessageCircle className="w-5 h-5 mr-2" />
+          </a>
+          <a
+            href="https://wa.me/919352812625"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 h-12 px-6 rounded-lg bg-accent text-gray-900 font-bold hover:opacity-90 transition-opacity"
+          >
+            <MessageCircle className="w-5 h-5" />
             WhatsApp
-          </Button>
+          </a>
         </div>
       </div>
     </>

@@ -50,4 +50,13 @@ for (const key of required) {
   }
 }
 
+// Warn about optional but important env vars
+if (!config.cloudinary.cloudName || !config.cloudinary.apiKey || !config.cloudinary.apiSecret) {
+  console.warn(
+    '\n⚠️  WARNING: Cloudinary credentials are not configured.\n' +
+    '   Image uploads will fail until you set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in server/.env\n' +
+    '   Sign up for free at https://cloudinary.com\n'
+  );
+}
+
 export default config;

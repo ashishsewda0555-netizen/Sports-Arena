@@ -9,6 +9,7 @@ import { DataTable } from '@/components/admin/DataTable';
 import { Modal } from '@/components/admin/Modal';
 import { FormInput, FormTextarea, FormSelect, FormCheckbox } from '@/components/admin/FormComponents';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { fetchApi } from '@/lib/apiClient';
 import { useToast } from '@/components/ui/ToastProvider';
 import { ConfirmDeleteModal } from '@/components/admin/ConfirmDeleteModal';
@@ -53,9 +54,7 @@ export default function AnnouncementsAdmin() {
   const fetchAnnouncements = async () => {
     try {
       setLoading(true);
-      const data = await fetchApi('/admin/announcements').catch(async () => {
-        return await fetchApi('/public/announcements/active');
-      });
+      const data = await fetchApi('/admin/announcements');
       setAnnouncements(Array.isArray(data) ? data : (data ? [data] : []));
     } catch (err) {
       console.error(err);
@@ -129,15 +128,16 @@ export default function AnnouncementsAdmin() {
     { 
       key: 'type', 
       label: 'Type',
-      render: (val) => <span className="capitalize">{val}</span>
+      render: (val) => {
+        const typeVariants = { info: 'info', warning: 'warning', success: 'success', error: 'error' };
+        return <Badge variant={typeVariants[val] || 'default'} dot className="capitalize">{val}</Badge>;
+      }
     },
     { 
       key: 'isActive', 
       label: 'Status',
       render: (val) => (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${val ? 'bg-success/10 text-success' : 'bg-text-disabled/20 text-text-secondary'}`}>
-          {val ? 'Active' : 'Inactive'}
-        </span>
+        <Badge variant={val ? 'success' : 'default'} dot>{val ? 'Active' : 'Inactive'}</Badge>
       )
     },
     { 

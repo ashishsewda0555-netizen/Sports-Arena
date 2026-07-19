@@ -2,6 +2,7 @@ import Event from '../models/Event.js';
 import GalleryImage from '../models/GalleryImage.js';
 import ApiError from '../utils/ApiError.js';
 import { parsePagination, paginatedResponse } from '../utils/pagination.js';
+import { uploadImage } from '../utils/cloudinary.js';
 
 /**
  * GET /api/v1/public/events — List active events with status filter
@@ -118,6 +119,11 @@ export async function listAdminEvents(req, res, next) {
  */
 export async function createEvent(req, res, next) {
   try {
+    if (req.file) {
+      const { imageUrl } = await uploadImage(req.file.buffer);
+      req.body.imageUrl = imageUrl;
+    }
+    
     const event = await Event.create(req.body);
     const populated = await Event.findById(event._id)
       .populate('coverImageId', 'imageUrl thumbnailUrl altText')
@@ -135,6 +141,11 @@ export async function createEvent(req, res, next) {
  */
 export async function updateEvent(req, res, next) {
   try {
+    if (req.file) {
+      const { imageUrl } = await uploadImage(req.file.buffer);
+      req.body.imageUrl = imageUrl;
+    }
+
     const event = await Event.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },

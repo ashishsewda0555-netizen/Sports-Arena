@@ -19,7 +19,8 @@ const schema = z.object({
   eventDate: z.string().min(1, "Event Date is required"),
   endDate: z.string().optional(),
   status: z.enum(['upcoming', 'past']),
-  isFeatured: z.boolean().default(false),
+  displayOrder: z.number().int().min(0).default(0).or(z.string().transform(v => parseInt(v) || 0)),
+  isActive: z.boolean().default(true),
 });
 
 export default function EventsAdmin() {
@@ -30,11 +31,12 @@ export default function EventsAdmin() {
   const [submitting, setSubmitting] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [file, setFile] = useState(null);
   const toast = useToast();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { status: 'upcoming', isFeatured: false }
+    defaultValues: { status: 'upcoming', displayOrder: 0, isActive: true }
   });
 
   useEffect(() => {
@@ -44,9 +46,7 @@ export default function EventsAdmin() {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const data = await fetchApi('/admin/events').catch(async () => {
-         return await fetchApi('/public/events');
-      });
+      const data = await fetchApi('/admin/events');
       setEvents(Array.isArray(data) ? data : (data ? [data] : []));
     } catch (err) {
       console.error(err);
@@ -56,6 +56,7 @@ export default function EventsAdmin() {
   };
 
   const openModal = (item = null) => {
+    setFile(null);
     if (item) {
       setEditingId(item._id);
       reset({
@@ -65,7 +66,7 @@ export default function EventsAdmin() {
       });
     } else {
       setEditingId(null);
-      reset({ title: '', description: '', eventDate: '', endDate: '', status: 'upcoming', isFeatured: false });
+      reset({ title: '', description: '', eventDate: '', endDate: '', status: 'upcoming', displayOrder: 0, isActive: true });
     }
     setIsModalOpen(true);
   };
@@ -73,15 +74,25 @@ export default function EventsAdmin() {
   const onSubmit = async (data) => {
     try {
       setSubmitting(true);
+      const formData = new FormData();
+      Object.keys(data).forEach(key => {
+        if (data[key] !== undefined && data[key] !== null) {
+          formData.append(key, data[key]);
+        }
+      });
+      if (file) {
+        formData.append('image', file);
+      }
+      
       if (editingId) {
         await fetchApi(`/admin/events/${editingId}`, {
           method: 'PUT',
-          body: JSON.stringify(data)
+          body: formData
         });
       } else {
         await fetchApi('/admin/events', {
           method: 'POST',
-          body: JSON.stringify(data)
+          body: formData
         });
       }
       setIsModalOpen(false);
@@ -162,6 +173,17 @@ export default function EventsAdmin() {
             register={register} 
             error={errors.title} 
           />
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-1">
+              Event Image (Optional for updates)
+            </label>
+            <input 
+              type="file" 
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="w-full text-sm text-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+            />
+          </div>
           <FormTextarea 
             label="Description" 
             name="description" 
@@ -196,14 +218,21 @@ export default function EventsAdmin() {
                 { value: 'past', label: 'Past (Archived)' }
               ]}
             />
-            <div className="mt-8">
-              <FormCheckbox 
-                label="Feature on Homepage" 
-                name="isFeatured" 
-                register={register} 
-                error={errors.isFeatured}
-              />
-            </div>
+            <FormInput 
+              label="Display Order" 
+              type="number"
+              name="displayOrder" 
+              register={register} 
+              error={errors.displayOrder} 
+            />
+          </div>
+          <div className="pt-2">
+            <FormCheckbox 
+              label="Is Active" 
+              name="isActive" 
+              register={register} 
+              error={errors.isActive}
+            />
           </div>
           
           <div className="flex justify-end gap-3 pt-4 border-t border-border mt-6">

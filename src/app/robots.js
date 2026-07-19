@@ -5,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: '/admin/',
     },
-    sitemap: 'https://championssportsarena.com/sitemap.xml',
+    sitemap: 'https://bhartisportsarena.com/sitemap.xml',
   };
 }

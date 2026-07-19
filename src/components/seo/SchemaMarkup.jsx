@@ -77,12 +77,12 @@ export function generateEventSchema(event) {
     "eventStatus": "https://schema.org/EventScheduled",
     "location": {
       "@type": "Place",
-      "name": "Champions Sports Arena",
+      "name": "Bharti Sports Arena",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "123 Arena Street",
-        "addressLocality": "Jaipur",
-        "postalCode": "302001",
+        "streetAddress": "Kanwarpura Chouraha, Near Prince Education Hub, Bikaner Agra Bypass Road",
+        "addressLocality": "Sikar",
+        "postalCode": "332001",
         "addressRegion": "Rajasthan",
         "addressCountry": "IN"
       }

@@ -11,9 +11,18 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'img.youtube.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
   },
+
 
   // Server external packages (used in API routes)
   serverExternalPackages: ['mongoose', 'bcryptjs', 'jsonwebtoken', 'nodemailer'],

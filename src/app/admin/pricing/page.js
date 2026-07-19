@@ -16,10 +16,10 @@ import { ConfirmDeleteModal } from '@/components/admin/ConfirmDeleteModal';
 
 const schema = z.object({
   planName: z.string().min(2, "Plan Name is required"),
-  category: z.enum(['coaching', 'casual', 'fitness']),
+  category: z.enum(['coaching', 'casual-play', 'fitness-zone']),
   priceLabel: z.string().min(1, "Price label is required (e.g. '₹2,500' or 'Contact Us')"),
   numericPrice: z.number().optional().or(z.string().transform(v => parseFloat(v) || undefined)),
-  billingPeriod: z.enum(['session', 'monthly', 'quarterly', 'yearly', 'none']),
+  billingPeriod: z.enum(['per-session', 'monthly', 'quarterly', 'one-time']),
   inclusions: z.array(z.object({ text: z.string().min(2, "Inclusion text required") })).min(1, "Add at least one inclusion"),
   isPopular: z.boolean().default(false),
   isActive: z.boolean().default(true),
@@ -38,7 +38,7 @@ export default function PricingAdmin() {
 
   const { register, control, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { category: 'casual', billingPeriod: 'none', isPopular: false, isActive: true, inclusions: [{ text: '' }] }
+    defaultValues: { category: 'casual-play', billingPeriod: 'one-time', isPopular: false, isActive: true, inclusions: [{ text: '' }] }
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -53,9 +53,7 @@ export default function PricingAdmin() {
   const fetchPlans = async () => {
     try {
       setLoading(true);
-      const data = await fetchApi('/admin/pricing').catch(async () => {
-         return await fetchApi('/public/pricing');
-      });
+      const data = await fetchApi('/admin/pricing');
       setPlans(Array.isArray(data) ? data : (data ? [data] : []));
     } catch (err) {
       console.error(err);
@@ -72,7 +70,7 @@ export default function PricingAdmin() {
       reset({ ...item, inclusions: mappedInclusions });
     } else {
       setEditingId(null);
-      reset({ planName: '', category: 'casual', priceLabel: '', numericPrice: '', billingPeriod: 'none', isPopular: false, isActive: true, inclusions: [{ text: '' }], displayOrder: 0 });
+      reset({ planName: '', category: 'casual-play', priceLabel: '', numericPrice: '', billingPeriod: 'one-time', isPopular: false, isActive: true, inclusions: [{ text: '' }], displayOrder: 0 });
     }
     setIsModalOpen(true);
   };
@@ -180,9 +178,9 @@ export default function PricingAdmin() {
               register={register} 
               error={errors.category}
               options={[
-                { value: 'casual', label: 'Casual Play' },
+                { value: 'casual-play', label: 'Casual Play' },
                 { value: 'coaching', label: 'Coaching' },
-                { value: 'fitness', label: 'Fitness Zone' }
+                { value: 'fitness-zone', label: 'Fitness Zone' }
               ]}
             />
           </div>
@@ -199,11 +197,10 @@ export default function PricingAdmin() {
               register={register} 
               error={errors.billingPeriod}
               options={[
-                { value: 'none', label: 'None / One-time' },
-                { value: 'session', label: 'Per Session' },
+                { value: 'one-time', label: 'None / One-time' },
+                { value: 'per-session', label: 'Per Session' },
                 { value: 'monthly', label: 'Monthly' },
-                { value: 'quarterly', label: 'Quarterly' },
-                { value: 'yearly', label: 'Yearly' }
+                { value: 'quarterly', label: 'Quarterly' }
               ]}
             />
             <FormInput label="Display Order" type="number" name="displayOrder" register={register} error={errors.displayOrder} />

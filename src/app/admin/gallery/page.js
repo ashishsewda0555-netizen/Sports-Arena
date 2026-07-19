@@ -9,18 +9,28 @@ import { DataTable } from '@/components/admin/DataTable';
 import { Modal } from '@/components/admin/Modal';
 import { FormInput, FormSelect, FormCheckbox } from '@/components/admin/FormComponents';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { fetchApi } from '@/lib/apiClient';
 import { useToast } from '@/components/ui/ToastProvider';
 import { ConfirmDeleteModal } from '@/components/admin/ConfirmDeleteModal';
 import { FallbackImage } from '@/components/ui/FallbackImage';
 
+const GALLERY_CATEGORIES = [
+  { value: 'courts', label: 'Courts' },
+  { value: 'coaching', label: 'Coaching' },
+  { value: 'tournaments', label: 'Tournaments & Events' },
+  { value: 'facilities', label: 'Facilities' },
+  { value: 'fitness-area', label: 'Fitness Area' },
+  { value: 'happy-customers', label: 'Happy Customers' },
+  { value: 'arena-infrastructure', label: 'Arena Infrastructure' },
+];
+
 const schema = z.object({
   altText: z.string().min(2, "Alt text is required for accessibility"),
-  category: z.enum(['facilities', 'tournaments', 'coaching', 'general']),
+  category: z.enum(['courts', 'coaching', 'tournaments', 'facilities', 'fitness-area', 'happy-customers', 'arena-infrastructure']),
   isFeatured: z.boolean().default(false),
   isActive: z.boolean().default(true),
   displayOrder: z.number().int().default(0).or(z.string().transform(v => parseInt(v) || 0)),
-  // For file uploads, we handle the file separately since z.instanceof(File) is tricky with RHF sometimes
 });
 
 export default function GalleryAdmin() {
@@ -36,7 +46,7 @@ export default function GalleryAdmin() {
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { category: 'facilities', isFeatured: false, isActive: true, displayOrder: 0 }
+    defaultValues: { category: 'courts', isFeatured: false, isActive: true, displayOrder: 0 }
   });
 
   useEffect(() => {
@@ -64,7 +74,7 @@ export default function GalleryAdmin() {
       reset(item);
     } else {
       setEditingId(null);
-      reset({ altText: '', category: 'facilities', isFeatured: false, isActive: true, displayOrder: 0 });
+      reset({ altText: '', category: 'courts', isFeatured: false, isActive: true, displayOrder: 0 });
     }
     setIsModalOpen(true);
   };
@@ -147,9 +157,7 @@ export default function GalleryAdmin() {
       key: 'isFeatured', 
       label: 'Featured',
       render: (val) => (
-        <span className={`px-2 py-1 rounded-full text-xs font-medium ${val ? 'bg-accent/10 text-accent' : 'bg-text-disabled/20 text-text-secondary'}`}>
-          {val ? 'Yes' : 'No'}
-        </span>
+        <Badge variant={val ? 'accent' : 'default'} dot>{val ? 'Yes' : 'No'}</Badge>
       )
     }
   ];
@@ -206,12 +214,7 @@ export default function GalleryAdmin() {
               name="category" 
               register={register} 
               error={errors.category}
-              options={[
-                { value: 'facilities', label: 'Facilities' },
-                { value: 'tournaments', label: 'Tournaments & Events' },
-                { value: 'coaching', label: 'Coaching' },
-                { value: 'general', label: 'General' }
-              ]}
+              options={GALLERY_CATEGORIES}
             />
             <FormInput 
               label="Display Order" 

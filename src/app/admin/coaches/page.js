@@ -14,7 +14,6 @@ import { Plus, Trash2 } from 'lucide-react';
 import { useToast } from '@/components/ui/ToastProvider';
 import { ConfirmDeleteModal } from '@/components/admin/ConfirmDeleteModal';
 
-const SPORTS = ['Badminton', 'Basketball', 'Football', 'Tennis', 'Swimming', 'Table Tennis', 'Volleyball'];
 const LEVELS = ['Junior', 'Senior', 'Beginner', 'Intermediate', 'Advanced', 'Tournament Prep'];
 
 const schema = z.object({
@@ -32,12 +31,15 @@ const schema = z.object({
 
 export default function CoachesAdmin() {
   const [coaches, setCoaches] = useState([]);
+  const [sportsList, setSportsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
   const toast = useToast();
 
   const { register, control, handleSubmit, reset, watch, formState: { errors } } = useForm({
@@ -55,30 +57,40 @@ export default function CoachesAdmin() {
   const batchLevelsWatch = watch('batchLevels', []);
 
   useEffect(() => {
-    fetchCoaches();
+    fetchData();
   }, []);
 
-  const fetchCoaches = async () => {
+  const fetchData = async () => {
     try {
       setLoading(true);
-      const data = await fetchApi('/admin/coaches').catch(async () => {
-         return await fetchApi('/public/coaches');
-      });
-      setCoaches(Array.isArray(data) ? data : (data ? [data] : []));
+      const [coachesData, sportsData] = await Promise.all([
+        fetchApi('/admin/coaches'),
+        fetchApi('/admin/sports')
+      ]);
+      setCoaches(Array.isArray(coachesData) ? coachesData : (coachesData ? [coachesData] : []));
+      setSportsList(Array.isArray(sportsData) ? sportsData : (sportsData ? [sportsData] : []));
     } catch (err) {
       console.error(err);
+      toast.error('Failed to load data');
     } finally {
       setLoading(false);
     }
   };
 
   const openModal = (item = null) => {
+    setFile(null);
     if (item) {
       setEditingId(item._id);
+      setPreviewUrl(item.imageUrl || null);
       const mappedAchievements = item.achievements?.length ? item.achievements.map(text => ({ text })) : [];
-      reset({ ...item, achievements: mappedAchievements });
+      reset({
+        ...item,
+        specializations: item.specializations?.map(s => s._id) || [],
+        achievements: mappedAchievements
+      });
     } else {
       setEditingId(null);
+      setPreviewUrl(null);
       reset({ name: '', title: '', yearsExperience: 0, shortBio: '', fullBio: '', specializations: [], batchLevels: [], achievements: [], isActive: true, displayOrder: 0 });
     }
     setIsModalOpen(true);
@@ -87,21 +99,46 @@ export default function CoachesAdmin() {
   const onSubmit = async (formData) => {
     try {
       setSubmitting(true);
-      const payload = { ...formData, achievements: formData.achievements?.map(a => a.text) || [] };
+      const payload = { 
+        ...formData, 
+        achievements: formData.achievements?.map(a => a.text) || [],
+        yearsOfExperience: parseInt(formData.yearsExperience, 10) || 0,
+        bioShort: formData.shortBio,
+        bioFull: formData.fullBio,
+        batchLevels: formData.batchLevels?.map(level => level.toLowerCase().replace(/\s+/g, '-')) || []
+      };
+      
+      delete payload.yearsExperience;
+      delete payload.shortBio;
+      delete payload.fullBio;
+
+      const fd = new FormData();
+      Object.keys(payload).forEach(key => {
+        const val = payload[key];
+        if (Array.isArray(val)) {
+          // Send array as JSON string since Zod preprocess will parse it
+          fd.append(key, JSON.stringify(val));
+        } else if (val !== undefined && val !== null) {
+          fd.append(key, val);
+        }
+      });
+      if (file) {
+        fd.append('image', file);
+      }
       
       if (editingId) {
         await fetchApi(`/admin/coaches/${editingId}`, {
           method: 'PUT',
-          body: JSON.stringify(payload)
+          body: fd
         });
       } else {
         await fetchApi('/admin/coaches', {
           method: 'POST',
-          body: JSON.stringify(payload)
+          body: fd
         });
       }
       setIsModalOpen(false);
-      fetchCoaches();
+      fetchData();
       toast.success(editingId ? 'Coach updated successfully' : 'Coach created successfully');
     } catch (err) {
       toast.error(err.message || 'Failed to save coach');
@@ -121,7 +158,7 @@ export default function CoachesAdmin() {
       setSubmitting(true);
       await fetchApi(`/admin/coaches/${itemToDelete._id}`, { method: 'DELETE' });
       setDeleteModalOpen(false);
-      fetchCoaches();
+      fetchData();
       toast.success('Coach deleted successfully');
     } catch (err) {
       toast.error(err.message || 'Failed to delete');
@@ -175,7 +212,35 @@ export default function CoachesAdmin() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <FormInput label="Full Name" name="name" register={register} error={errors.name} />
-            <FormInput label="Title (e.g. Head Coach)" name="title" register={register} error={errors.title} />
+            <FormInput label="Title (e.g., Head Coach)" name="title" register={register} error={errors.title} />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-text-primary mb-1">
+              Coach Image
+            </label>
+            <div className="flex items-center gap-4">
+              {previewUrl && (
+                <div className="relative w-16 h-16 rounded-full overflow-hidden bg-surface-alt border border-border">
+                  <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                </div>
+              )}
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={(e) => {
+                  const selected = e.target.files[0];
+                  setFile(selected);
+                  if (selected) {
+                    setPreviewUrl(URL.createObjectURL(selected));
+                  } else {
+                    const current = coaches.find(c => c._id === editingId);
+                    setPreviewUrl(current?.imageUrl || null);
+                  }
+                }}
+                className="flex-grow text-sm text-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -204,12 +269,20 @@ export default function CoachesAdmin() {
             <h4 className="text-sm font-medium text-text-primary mb-2">Specializations</h4>
             {errors.specializations && <p className="text-error text-sm mb-2">{errors.specializations.message}</p>}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-              {SPORTS.map(sport => (
-                <label key={sport} className="flex items-center gap-2 text-sm">
-                  <input type="checkbox" value={sport} {...register('specializations')} className="rounded border-border text-secondary focus:ring-secondary bg-bg" />
-                  {sport}
-                </label>
-              ))}
+              {loading ? (
+                <p className="text-sm text-text-secondary italic col-span-full">Loading specializations...</p>
+              ) : sportsList.length === 0 ? (
+                <p className="text-sm text-error italic bg-error/10 p-3 rounded-md col-span-full">
+                  No specializations available. Please run the seed script to populate sports.
+                </p>
+              ) : (
+                sportsList.map(sport => (
+                  <label key={sport._id} className="flex items-center gap-2 text-sm">
+                    <input type="checkbox" value={sport._id} {...register('specializations')} className="rounded border-border text-secondary focus:ring-secondary bg-bg" />
+                    {sport.name}
+                  </label>
+                ))
+              )}
             </div>
           </div>
 

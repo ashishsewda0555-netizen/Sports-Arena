@@ -29,6 +29,9 @@ const eventSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'GalleryImage',
     },
+    imageUrl: {
+      type: String,
+    },
     status: {
       type: String,
       required: true,

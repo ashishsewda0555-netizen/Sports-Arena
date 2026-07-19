@@ -12,6 +12,13 @@ cloudinary.config({
  * Returns { imageUrl, thumbnailUrl, width, height, publicId }.
  */
 export async function uploadImage(buffer, options = {}) {
+  // Guard: ensure Cloudinary is configured before attempting upload
+  if (!config.cloudinary.cloudName || !config.cloudinary.apiKey || !config.cloudinary.apiSecret) {
+    throw new Error(
+      'Cloudinary is not configured. Please set CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in server/.env'
+    );
+  }
+
   const { folder = 'sports-arena/gallery', transformation = [] } = options;
 
   return new Promise((resolve, reject) => {

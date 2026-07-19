@@ -8,11 +8,11 @@ export function ConfirmDeleteModal({ isOpen, onClose, onConfirm, title = "Confir
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
       <div className="flex flex-col items-center text-center p-4">
-        <div className="w-12 h-12 rounded-full bg-error/10 flex items-center justify-center mb-4">
-          <AlertTriangle className="w-6 h-6 text-error" />
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-error/20 to-error/5 flex items-center justify-center mb-5">
+          <AlertTriangle className="w-8 h-8 text-error" />
         </div>
         <p className="text-text-primary font-medium mb-2">{message}</p>
-        <p className="text-sm text-text-secondary mb-6">This action is permanent and cannot be reversed.</p>
+        <p className="text-sm text-text-secondary mb-8">This action is permanent and cannot be reversed.</p>
         
         <div className="flex justify-center gap-3 w-full">
           <Button type="button" variant="ghost" onClick={onClose} disabled={isDeleting} className="w-full sm:w-auto">

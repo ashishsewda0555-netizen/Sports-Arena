@@ -31,7 +31,18 @@ export async function fetchApi(endpoint, options = {}) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data?.error?.message || 'API Request Failed');
+    // Build a detailed error message from validation details if available
+    const errorObj = data?.error;
+    let message = errorObj?.message || 'API Request Failed';
+
+    if (errorObj?.details && Array.isArray(errorObj.details) && errorObj.details.length > 0) {
+      const fieldErrors = errorObj.details
+        .map((d) => d.field ? `${d.field}: ${d.message}` : d.message)
+        .join('. ');
+      message = fieldErrors;
+    }
+
+    throw new Error(message);
   }
 
   return data.data; // Server is structured to return { data: ... }

@@ -50,7 +50,7 @@ export async function getSportBySlug(slug) {
 
 export async function getCoaches() {
   return safeFetch(async () => {
-    return await Coach.find({ isActive: true }).sort({ displayOrder: 1 }).lean();
+    return await Coach.find({ isActive: true }).sort({ displayOrder: 1 }).populate('specializations', 'name').lean();
   }, []);
 }
 

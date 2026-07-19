@@ -17,8 +17,8 @@ export const createEventSchema = z.object({
   coverImageId: z.string().optional().nullable(),
   status: z.enum(EVENT_STATUSES).optional().default('upcoming'),
   relatedSportIds: z.array(z.string()).optional().default([]),
-  displayOrder: z.number().int().min(0, 'Display order must be a non-negative integer'),
-  isActive: z.boolean().optional().default(true),
+  displayOrder: z.coerce.number().int().min(0, 'Display order must be a non-negative integer'),
+  isActive: z.coerce.boolean().optional().default(true),
 });
 
 export const updateEventSchema = createEventSchema.partial();
